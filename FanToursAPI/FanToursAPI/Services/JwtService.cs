@@ -11,12 +11,11 @@ namespace FanToursAPI.Services
 {
     public class JwtService
     {
-        public string GenerateAccessToken(string email, string role)
+        public string GenerateAccessToken(string email)
         {
             var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, email)
                 };
             ClaimsIdentity claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
