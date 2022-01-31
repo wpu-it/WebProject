@@ -25,7 +25,7 @@ namespace FanToursAPI.Controllers
         public async Task<ActionResult> GetAllFanTours()
         {
             var fantours = await fanToursService.GetAll();
-            if(fantours != null)
+            if (fantours != null)
             {
                 var mappedTours = mapper.Mapper.Map<List<FanTourModel>>(fantours);
                 return new JsonResult(mappedTours);
@@ -38,6 +38,33 @@ namespace FanToursAPI.Controllers
         {
             var tour = mapper.Mapper.Map<FanTourDTO>(model);
             await fanToursService.Create(tour);
+            var tours = await fanToursService.GetAll();
+            var mappedTours = mapper.Mapper.Map<List<FanTourModel>>(tours);
+            return new JsonResult(mappedTours);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateFanTour([FromBody] UpdateFanTourModel model)
+        {
+            var tour = await fanToursService.Get(model.Id);
+            if (tour is null) return BadRequest();
+            tour.Title = model.Title;
+            tour.Description = model.Description;
+            tour.Schedule = model.Schedule;
+            tour.PriceWithTicket = model.PriceWithTicket;
+            tour.PriceWithoutTicket = model.PriceWithoutTicket;
+            tour.PhotoUrl = model.PhotoUrl;
+            await fanToursService.Update(tour);
+            var tours = await fanToursService.GetAll();
+            var mappedTours = mapper.Mapper.Map<List<FanTourModel>>(tours);
+            return new JsonResult(mappedTours);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> RemoveFanTour(int id)
+        {
+            if (await fanToursService.Get(id) == null) return BadRequest();
+            await fanToursService.Remove(id);
             var tours = await fanToursService.GetAll();
             var mappedTours = mapper.Mapper.Map<List<FanTourModel>>(tours);
             return new JsonResult(mappedTours);

@@ -2,6 +2,7 @@
 using FanToursAPI.Business.DTO;
 using FanToursAPI.Models.Auth;
 using FanToursAPI.Models.FanTour;
+using FanToursAPI.Models.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace FanToursAPI.Models.Automapper.Profiles
             CreateMap<UserModel, RegisterModel>().ReverseMap();
             CreateMap<FanTourDTO, FanTourModel>().ReverseMap();
             CreateMap<CreateFanTourModel, FanTourDTO>().ReverseMap();
+            CreateMap<OrderDTO, OrderModel>().ReverseMap();
+            CreateMap<CreateOrderModel, OrderDTO>().ReverseMap();
         }
     }
 }
