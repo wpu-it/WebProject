@@ -30,7 +30,7 @@ namespace FanToursAPI.DB.Repositories
             srchEntity.Title = entity.Title;
             srchEntity.Description = entity.Description;
             srchEntity.Schedule = entity.Schedule;
-            srchEntity.PriceWithTicket = entity.PriceWithTicket;
+            srchEntity.TicketPrice = entity.TicketPrice;
             srchEntity.PriceWithoutTicket = entity.PriceWithoutTicket;
             srchEntity.PhotoUrl = entity.PhotoUrl;
             Table.Update(srchEntity);

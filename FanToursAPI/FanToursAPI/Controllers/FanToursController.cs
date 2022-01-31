@@ -51,7 +51,7 @@ namespace FanToursAPI.Controllers
             tour.Title = model.Title;
             tour.Description = model.Description;
             tour.Schedule = model.Schedule;
-            tour.PriceWithTicket = model.PriceWithTicket;
+            tour.TicketPrice = model.TicketPrice;
             tour.PriceWithoutTicket = model.PriceWithoutTicket;
             tour.PhotoUrl = model.PhotoUrl;
             await fanToursService.Update(tour);
