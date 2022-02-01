@@ -13,6 +13,7 @@ namespace FanToursAPI.DB.EF
         public DbSet<User> Users { get; set; }
         public DbSet<FanTour> FanTours { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<News> News { get; set; }
 
         MD5Service mD5Service;
         public DatabaseContext(DbContextOptions<DatabaseContext> options, MD5Service mD5Service)

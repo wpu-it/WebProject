@@ -2,8 +2,9 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {EnvironmentModel} from "../../../environments/environment.model";
 import {BrowserLocalStorage} from "../../shared/storage/local-storage";
-import {Observable, publishReplay, refCount} from "rxjs";
+import {Observable} from "rxjs";
 import {ApiFantour} from "./fantours-api.interfaces";
+import {publishReplay, refCount} from "rxjs/operators";
 
 @Injectable()
 export class FantoursApiService{

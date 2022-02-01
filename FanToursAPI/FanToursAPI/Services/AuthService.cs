@@ -35,7 +35,7 @@ namespace FanToursAPI.Services
         public async Task<JwtResponse> Login(LoginModel model)
         {
             var users = await _usersService.GetAll();
-            var user = users.FirstOrDefault(u => u.Email.Equals(model.Email) && u.Password.Equals(model.Password));
+            var user = users.FirstOrDefault(u => u.Email.Equals(model.Email) && u.Password.Equals(this.md5Service.Hash(model.Password)));
             if (user is null) throw new UserNotFoundException();
             return new JwtResponse { AccessToken = jwtService.GenerateAccessToken(user.Email) };
         }

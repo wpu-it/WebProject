@@ -1,0 +1,5 @@
+<ng-container *ngIf="this.fantoursService.fantours$ | async as fantours">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
+    <fantour style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></fantour>
+  </div>
+</ng-container>

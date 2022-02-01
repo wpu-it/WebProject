@@ -13,6 +13,7 @@ namespace FanToursAPI.DB.Repositories
         FanToursRepository _fanToursRepository;
         OrdersRepository _ordersRepository;
         UsersRepository _usersRepository;
+        NewsRepository _newsRepository;
 
         public FanToursRepository FanToursRepository =>
             _fanToursRepository ?? (_fanToursRepository = new FanToursRepository(db));
@@ -22,6 +23,9 @@ namespace FanToursAPI.DB.Repositories
 
         public UsersRepository UsersRepository =>
             _usersRepository ?? (_usersRepository = new UsersRepository(db));
+
+        public NewsRepository NewsRepository =>
+            _newsRepository ?? (_newsRepository = new NewsRepository(db));
 
         public UnitOfWork(DatabaseContext db)
         {

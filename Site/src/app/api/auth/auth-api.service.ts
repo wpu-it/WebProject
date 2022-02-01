@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {EnvironmentModel} from "../../../environments/environment.model";
-import {Observable, publishReplay, refCount} from "rxjs";
+import {Observable} from "rxjs";
 import {JwtResponse} from "./auth-api.interfaces";
+import {publishReplay, refCount} from "rxjs/operators";
 
 @Injectable()
 export class AuthApiService{
@@ -22,7 +23,7 @@ export class AuthApiService{
         email,
         password
       }
-      ).pipe(
+        ).pipe(
         publishReplay(1),
         refCount()
       );

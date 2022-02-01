@@ -13,6 +13,7 @@ namespace FanToursAPI.Business.DTO
         public decimal PriceWithoutTicket { get; set; }
         public decimal TicketPrice { get; set; }
         public string PhotoUrl { get; set; }
+        public int Quantity { get; set; }
         public List<OrderDTO> Orders { get; set; }
     }
 }

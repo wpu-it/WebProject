@@ -15,6 +15,7 @@ namespace FanToursAPI.Business.Automapper.Profiles
             CreateMap<FanTour, FanTourDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<News, NewsDTO>().ReverseMap();
         }
     }
 }

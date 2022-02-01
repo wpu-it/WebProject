@@ -11,5 +11,6 @@ namespace FanToursAPI.DB.Interfaces
         FanToursRepository FanToursRepository { get; }
         OrdersRepository OrdersRepository { get; }
         UsersRepository UsersRepository { get; }
+        NewsRepository NewsRepository { get; }
     }
 }

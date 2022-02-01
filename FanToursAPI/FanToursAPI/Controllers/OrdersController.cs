@@ -1,10 +1,12 @@
 ﻿using FanToursAPI.Business.DTO;
+using FanToursAPI.Business.Exceptions;
 using FanToursAPI.Business.Services;
 using FanToursAPI.Models.Automapper;
 using FanToursAPI.Models.Order;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 

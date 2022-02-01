@@ -54,6 +54,7 @@ namespace FanToursAPI.Controllers
             tour.TicketPrice = model.TicketPrice;
             tour.PriceWithoutTicket = model.PriceWithoutTicket;
             tour.PhotoUrl = model.PhotoUrl;
+            tour.Quantity = model.Quantity;
             await fanToursService.Update(tour);
             var tours = await fanToursService.GetAll();
             var mappedTours = mapper.Mapper.Map<List<FanTourModel>>(tours);

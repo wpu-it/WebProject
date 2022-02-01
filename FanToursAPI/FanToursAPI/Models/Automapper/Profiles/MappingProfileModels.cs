@@ -2,6 +2,7 @@
 using FanToursAPI.Business.DTO;
 using FanToursAPI.Models.Auth;
 using FanToursAPI.Models.FanTour;
+using FanToursAPI.Models.News;
 using FanToursAPI.Models.Order;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace FanToursAPI.Models.Automapper.Profiles
             CreateMap<CreateFanTourModel, FanTourDTO>().ReverseMap();
             CreateMap<OrderDTO, OrderModel>().ReverseMap();
             CreateMap<CreateOrderModel, OrderDTO>().ReverseMap();
+            CreateMap<NewsDTO, NewsModel>().ReverseMap();
+            CreateMap<CreateNewsModel, NewsDTO>().ReverseMap();
         }
     }
 }
