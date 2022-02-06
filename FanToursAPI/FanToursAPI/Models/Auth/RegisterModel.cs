@@ -14,6 +14,7 @@ namespace FanToursAPI.Models.Auth
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        public decimal Discount { get; set; } = 0;
+        [Required]
+        public string Photo { get; set; }
     }
 }

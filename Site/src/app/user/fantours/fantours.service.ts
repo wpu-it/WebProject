@@ -15,7 +15,6 @@ export class FantoursService{
     this.fantours$ = this.fantoursApiService.getAllFantours().pipe(
       map(fantours => {
         let newFantours: Fantour[] = this.mapFantours(fantours);
-        console.log(newFantours.length);
         return newFantours;
       })
     );

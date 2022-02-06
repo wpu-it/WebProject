@@ -1,0 +1,15 @@
+<div class="central-container">
+  <div class="btns-cont">
+    <a mat-raised-button color="primary" style="margin-top: 20px; margin-left: 20px;"
+       (click)="goToPrevPage()"><mat-icon>reply</mat-icon> Go back</a>
+    <a mat-raised-button color="primary" style="margin-top: 20px; margin-right: 20px;"
+       (click)="goToMainPageClick()"><mat-icon>home</mat-icon> Go to main page</a>
+  </div>
+  <div style="min-height: 100%; margin-left: 35%">
+
+    <img style="width: 200px; height: 100px; margin-top: 15px;" src="{{welcomeUrl}}">
+    <login [class.hidden]="!loginVisible"></login>
+    <register [class.hidden]="loginVisible"></register>
+    <button mat-raised-button color="primary" style="margin-top: 10px;" (click)="onSwitchClick()">Switch to {{switcher}}</button>
+  </div>
+</div>

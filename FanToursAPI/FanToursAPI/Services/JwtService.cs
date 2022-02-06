@@ -31,5 +31,12 @@ namespace FanToursAPI.Services
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
+
+        public string EncodeAccessToken(string accessToken)
+        {
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(accessToken);
+            var claims = jwt.Claims.ToList();
+            return claims[0].Value;
+        }
     }
 }

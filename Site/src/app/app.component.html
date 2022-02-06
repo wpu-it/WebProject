@@ -1,26 +1,30 @@
 <mat-toolbar class="toolbar">
-  <mat-toolbar-row>
-    <img style="width: 80px; height: 50px; margin-right: 5px;" src="https://international-adviser.com/wp-content/uploads/sites/3/2021/01/Football-goal-score.jpg">
-    <span>Football Fan Tours</span>
+  <mat-toolbar-row style="display: flex; justify-content: space-between;">
+      <a routerLink="/" class="head-link">
+        <img style="width: 80px; height: 50px; margin-right: 5px;" src="{{logoUrl}}">
+        <span style="margin-top: 8px;">Football Fan Tours</span>
+      </a>
+      <div style="margin-right: 15px; margin-bottom: 15px;" *ngIf="localStorage.getItem('accessToken') != null">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon class="dashboard-img">account_circle</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" >
+            <button (click)="onDashboardClick()" mat-menu-item>
+              <mat-icon>dashboard</mat-icon>
+              <span>Dashboard</span>
+            </button>
+            <button mat-menu-item (click)="onLogoutClick()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+
+          </mat-menu>
+      </div>
+      <div *ngIf="localStorage.getItem('accessToken') == null">
+        <a mat-raised-button routerLink="/auth">Sign in/Sign up</a>
+      </div>
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="main" style="height: 100%">
-  <div class="containers">
-    <div class="left-container">
-      <div style="background-color: rgb(197, 197, 197); min-height: 100%">
-        Sort
-      </div>
-    </div>
-    <div class="central-container">
-      <div style="background-color: rgb(197, 197, 197); min-height: 100%">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-    <div class="right-container">
-      <div style="background-color: rgb(197, 197, 197); min-height: 100%">
-        News
-      </div>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
 </div>
-

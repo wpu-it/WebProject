@@ -1,0 +1,70 @@
+<div>
+  <div>
+    Welcome in our community!
+  </div>
+  <form class="form" style="margin-top: 10px;"  [formGroup]="form">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Fullname</mat-label>
+        <input matInput placeholder="Enter your fullname..." formControlName="fullname">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['fullname'].errors">
+            <div *ngIf="form.controls['fullname'].errors.required" class="mat-error">Fullname is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Enter your email..." formControlName="email">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['email'].errors">
+            <div *ngIf="form.controls['email'].errors.required" class="mat-error">Email is required</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput placeholder="Enter your password..." formControlName="password">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['password'].errors">
+            <div *ngIf="form.controls['password'].errors.required" class="mat-error">Password is required</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput placeholder="Enter your confirmation password..." formControlName="confirmPassword">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['password'].value !== form.controls['confirmPassword'].value">
+            <div class="mat-error">Passwords are not comparing</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+        <div style="display:flex; flex-direction: column">
+          <mat-label>Photo</mat-label>
+          <input type="file" accept=".jpg" (change)="onPhotoChange($event)">
+        </div>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['photo'].errors">
+            <div *ngIf="form.controls['photo'].errors.required" class="mat-error">Photo is required</div>
+          </div>
+        </mat-hint>
+    <div *ngIf="!isRegistered">
+      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+    </div>
+    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="onRegisterClick()" [disabled]="disabled">Sign up</button>
+  </form>
+</div>

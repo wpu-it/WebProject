@@ -14,6 +14,16 @@ namespace FanToursAPI.DB.Repositories
         {
         }
 
+        public override async Task<User> Get(int id)
+        {
+            return await Table.Include(us => us.Picture).FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public override async Task<List<User>> GetAll()
+        {
+            return await Table.Include(us => us.Picture).ToListAsync();
+        }
+
         public override async Task Update(User entity)
         {
             var srchEntity = await Get(entity.Id);

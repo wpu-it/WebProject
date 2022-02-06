@@ -1,0 +1,17 @@
+.hidden{
+  display: none;
+}
+
+.central-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 50%;
+  margin: 0 auto;
+  background: beige;
+  opacity: 0.8;
+}
+
+.btns-cont{
+  display: flex;
+  justify-content: space-between;
+}

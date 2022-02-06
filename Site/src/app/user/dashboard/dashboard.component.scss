@@ -1,0 +1,46 @@
+.central-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 50%;
+  background: beige;
+  margin: 0 auto;
+  opacity: 0.8;
+}
+
+.btns{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.btns > a{
+  width: 125px;
+  padding: 0;
+}
+
+.btns-cont{
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-img{
+  border-radius: 100px;
+  opacity: 1;
+  width: 200px;
+  height: 200px;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.info > div{
+  margin-top: 5px;
+}
+
+.admn-img{
+  margin-top: 40px;
+  transform: scale(5);
+}

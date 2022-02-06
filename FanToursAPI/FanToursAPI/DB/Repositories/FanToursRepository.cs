@@ -16,12 +16,12 @@ namespace FanToursAPI.DB.Repositories
 
         public override async Task<FanTour> Get(int id)
         {
-            return await Table.Include(ft => ft.Orders).FirstOrDefaultAsync(ft => ft.Id == id);
+            return await Table.Include(ft => ft.Orders).Include(ft => ft.Picture).FirstOrDefaultAsync(ft => ft.Id == id);
         }
 
         public override async Task<List<FanTour>> GetAll()
         {
-            return await Table.Include(ft => ft.Orders).ToListAsync();
+            return await Table.Include(ft => ft.Orders).Include(ft => ft.Picture).ToListAsync();
         }
 
         public override async Task Update(FanTour entity)
@@ -32,7 +32,6 @@ namespace FanToursAPI.DB.Repositories
             srchEntity.Schedule = entity.Schedule;
             srchEntity.TicketPrice = entity.TicketPrice;
             srchEntity.PriceWithoutTicket = entity.PriceWithoutTicket;
-            srchEntity.PhotoUrl = entity.PhotoUrl;
             srchEntity.Quantity = entity.Quantity;
             Table.Update(srchEntity);
             await db.SaveChangesAsync();

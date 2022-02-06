@@ -1,5 +1,24 @@
-<ng-container *ngIf="this.fantoursService.fantours$ | async as fantours">
-  <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
-    <fantour style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></fantour>
+
+
+  <div class="containers">
+    <div class="left-container">
+      <div style="min-height: 100%">
+        Sort
+      </div>
+    </div>
+    <div class="central-container">
+      <div style="min-height: 100%">
+        <ng-container *ngIf="this.fantoursService.fantours$ | async as fantours">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
+            <fantour style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></fantour>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="right-container">
+      <div style="min-height: 100%">
+        News
+      </div>
+    </div>
   </div>
-</ng-container>
+

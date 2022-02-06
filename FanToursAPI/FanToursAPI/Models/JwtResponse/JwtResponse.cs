@@ -8,5 +8,6 @@ namespace FanToursAPI.Models.JwtResponse
     public class JwtResponse
     {
         public string AccessToken { get; set; }
+        public string Role { get; set; }
     }
 }

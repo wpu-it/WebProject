@@ -29,15 +29,17 @@ export class AuthApiService{
       );
   }
 
-  register(email: string, password: string): Observable<JwtResponse>{
+  register(fullname: string, email: string, password: string, photo: string): Observable<JwtResponse>{
       return this.httpClient.post<JwtResponse>([
         this.appEnv.fantoursAPI,
         'auth',
         'register'
       ].join('/'),
         {
+          fullname,
           email,
-          password
+          password,
+          photo
         },
         {
           headers:{

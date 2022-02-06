@@ -12,8 +12,8 @@ namespace FanToursAPI.DB.Entities
         public string Schedule { get; set; }
         public decimal PriceWithoutTicket { get; set; }
         public decimal TicketPrice { get; set; }
-        public string PhotoUrl { get; set; }
         public int Quantity { get; set; }
         public List<Order> Orders { get; set; }
+        public FanTourPicture Picture { get; set; }
     }
 }

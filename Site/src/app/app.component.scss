@@ -10,37 +10,26 @@
   background-repeat: no-repeat;
 }
 
-.containers{
+.head-link{
   display: flex;
-  height: 100%;
+  text-decoration: none;
+  color: black;
 }
 
-.left-container{
-  height: 100%;
-  box-sizing: border-box;
-  width: 15%;
-  margin-left: 5%;
-  margin-right: 5%;
-  background: white;
-}
-
-.central-container{
-  height: 100%;
-  box-sizing: border-box;
-  width: 50%;
-
-  background: white;
-}
-
-.right-container{
-  height: 100%;
-  box-sizing: border-box;
-  width: 15%;
-  margin-left: 5%;
-  margin-right: 5%;
-  background: white;
+.head-link:hover{
+  text-decoration: none;
 }
 
 .toolbar{
   background-color: #5de940;
+}
+
+.dashboard-img{
+  margin-top: 10px;
+  transform: scale(2);
+}
+
+.btns-cont{
+  display: flex;
+  justify-content: space-between;
 }

@@ -12,5 +12,6 @@ namespace FanToursAPI.Business.DTO
         public string Password { get; set; }
         public decimal Discount { get; set; }
         public bool IsAdmin { get; set; }
+        public UserPictureDTO Picture { get; set; }
     }
 }

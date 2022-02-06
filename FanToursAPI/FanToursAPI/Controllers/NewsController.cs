@@ -60,7 +60,6 @@ namespace FanToursAPI.Controllers
             if (news is null) return BadRequest();
             news.Title = model.Title;
             news.Text = model.Text;
-            news.PhotoUrl = model.PhotoUrl;
             await newsService.Update(news);
             var newS = await newsService.GetAll();
             var mappedNews = mapper.Mapper.Map<List<NewsModel>>(newS);

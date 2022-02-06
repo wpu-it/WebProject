@@ -77,6 +77,10 @@ namespace FanToursAPI
             services.AddTransient<OrdersService>();
             services.AddTransient<UsersService>();
             services.AddTransient<NewsService>();
+            services.AddTransient<FanToursPicturesRepository>();
+            services.AddTransient<NewsPicturesService>();
+            services.AddTransient<PicturesService>();
+            services.AddTransient<UserPicturesService>();
             services.AddTransient<MD5Service>();
             services.AddTransient<AuthService>();
             services.AddTransient<JwtService>();

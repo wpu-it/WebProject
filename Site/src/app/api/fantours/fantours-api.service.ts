@@ -19,13 +19,7 @@ export class FantoursApiService{
       return this.httpClient.get<ApiFantour[]>([
         this.env.fantoursAPI,
         'fantours'
-      ].join('/'),
-        {
-          headers: {
-            'Authorization': `Bearer ${this.localStorage.getItem('accessToken')}`
-          }
-        }
-        ).pipe(
+      ].join('/')).pipe(
           publishReplay(1),
           refCount()
       )

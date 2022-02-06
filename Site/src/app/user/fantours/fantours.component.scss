@@ -1,1 +1,30 @@
+.containers{
+  display: flex;
+  height: 100%;
+}
 
+.left-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background: beige;
+}
+
+.central-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 50%;
+  background: beige;
+  opacity: 0.8;
+}
+
+.right-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background: beige;
+}

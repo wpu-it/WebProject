@@ -1,0 +1,13 @@
+<div style="margin-left: 30px;">
+  <h2 style="margin-left: 40%; margin-top: 15px;"><mat-icon>card_travel</mat-icon> My orders</h2>
+  <div *ngIf="orders$ | async as orders">
+    <div *ngIf="orders.length == 0">
+      <h2>Ooops... You don't have any orders yet</h2>
+    </div>
+    <div *ngIf="orders.length != 0">
+      <div *ngFor="let order of orders">
+        todo: realize
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div>
+  <form class="form" style="margin-top: 30px; margin-left: 35%;" [formGroup]="form">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Fullname</mat-label>
+        <input matInput placeholder="Enter new fullname..." formControlName="fullname">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['fullname'].errors">
+            <div *ngIf="form.controls['fullname'].errors.required" class="mat-error">Fullname is required</div>
+          </div>
+          <div *ngIf="form.controls['fullname'].value === prevFullname">
+            <div class="mat-error">Fullname wasn't changed</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <button mat-raised-button color="primary" (click)="onEditClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
+  </form>
+</div>

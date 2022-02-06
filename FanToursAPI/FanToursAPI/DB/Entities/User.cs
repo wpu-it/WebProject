@@ -12,5 +12,6 @@ namespace FanToursAPI.DB.Entities
         public string Password { get; set; }
         public decimal Discount { get; set; }
         public bool IsAdmin { get; set; }
+        public UserPicture Picture { get; set; }
     }
 }
