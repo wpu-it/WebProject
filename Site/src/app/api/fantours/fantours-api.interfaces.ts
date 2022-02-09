@@ -5,5 +5,6 @@ export interface ApiFantour{
   schedule: string;
   priceWithoutTicket: number;
   ticketPrice: number;
-  photoUrl: string;
+  photo: string;
+  quantity: number;
 }

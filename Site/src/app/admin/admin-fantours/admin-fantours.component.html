@@ -1,0 +1,18 @@
+<div>
+  <h1 style="margin-left: 39%;">Fan tours editor</h1>
+  <div class="btns">
+    <a routerLink="add"
+       mat-raised-button style="background-color: #6bb9e1; margin-bottom: 10px;">Add new item</a>
+  </div>
+  <router-outlet (deactivate)="onDeactivateAdmin()" (activate)="activate()"></router-outlet>
+  <ng-container *ngIf="this.fantours$ | async as fantours">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 35px;" *ngIf="fantours.length != 0">
+      <admin-fantour style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></admin-fantour>
+    </div>
+    <h1 style="margin-left: 20px; margin-top: 20px;" *ngIf="fantours.length == 0">There is no fan tours yet...</h1>
+  </ng-container>
+  <mat-paginator style="margin-top: 20px;" (page)="onPaginatorClick($event)"
+                 [length]="totalResults"
+                 [pageSize]="pageSize"
+                 aria-label="Select page"></mat-paginator>
+</div>

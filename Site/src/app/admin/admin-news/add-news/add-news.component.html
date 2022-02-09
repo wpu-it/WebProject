@@ -1,0 +1,45 @@
+<div style="margin-top: 20px; margin-left: 35%;">
+  <form class="form" [formGroup]="form">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Enter title..." formControlName="title">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['title'].errors">
+            <div *ngIf="form.controls['title'].errors.required" class="mat-error">Title is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Text</mat-label>
+        <input matInput placeholder="Enter text..." formControlName="text">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['text'].errors">
+            <div *ngIf="form.controls['text'].errors.required" class="mat-error">Text is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+    <div style="display:flex; flex-direction: column">
+      <mat-label>Photo</mat-label>
+      <input type="file" accept=".jpg" (change)="onPhotoChange($event)">
+    </div>
+    <mat-hint style="font-weight: bold">
+      <div *ngIf="form.controls['photo'].errors">
+        <div *ngIf="form.controls['photo'].errors.required" class="mat-error">Photo is required</div>
+      </div>
+    </mat-hint>
+    <div *ngIf="!isConfirmed">
+      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+    </div>
+    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="onAddClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
+  </form>
+</div>

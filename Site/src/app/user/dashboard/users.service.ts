@@ -1,12 +1,10 @@
 import {Injectable} from "@angular/core";
 import {UsersApiService} from "../../api/users/users-api.service";
 import {User} from "./user.interface";
-import {map, switchMap, tap} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
-import {BrowserLocalStorage} from "../../shared/storage/local-storage";
-import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {Order} from "../interfaces";
+import {Order} from "../orders/orders.interfaces";
 
 @Injectable()
 export class UsersService{

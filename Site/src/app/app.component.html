@@ -17,7 +17,6 @@
               <mat-icon>exit_to_app</mat-icon>
               <span>Logout</span>
             </button>
-
           </mat-menu>
       </div>
       <div *ngIf="localStorage.getItem('accessToken') == null">
@@ -25,6 +24,18 @@
       </div>
   </mat-toolbar-row>
 </mat-toolbar>
-<div class="main" style="height: 100%">
-  <router-outlet></router-outlet>
-</div>
+  <div class="main" style="height: 200%;" [ngStyle]="{ 'background-image': 'url(' + backgroundUrl + ')'}">
+    <router-outlet></router-outlet>
+  </div>
+<footer>
+  <div class="social">
+    <div><a href="#">H</a></div>
+    <div><a href="#"></a></div>
+    <div><a href="#"></a></div>
+    <div><a href="#"></a></div>
+    <div><a href="#"></a></div>
+  </div>
+  <div class="copyright">
+    <div>&copy; UNTITLED 2019</div>
+  </div>
+</footer>

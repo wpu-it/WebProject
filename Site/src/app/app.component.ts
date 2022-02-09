@@ -12,6 +12,8 @@ import {AuthService} from "./auth/auth.service";
 export class AppComponent implements OnInit{
   title = 'Site';
   logoUrl = '';
+  backgroundUrl = '';
+
   constructor(
     readonly localStorage: BrowserLocalStorage,
     private readonly router: Router,
@@ -23,6 +25,9 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.picturesService.getPictureByName('Logo').subscribe(res => {
       this.logoUrl = res;
+    });
+    this.picturesService.getPictureByName('Background').subscribe(res => {
+      this.backgroundUrl = res;
     });
   }
 

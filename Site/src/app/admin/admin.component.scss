@@ -1,0 +1,23 @@
+.central-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 50%;
+  background: beige;
+  margin: 0 auto;
+  opacity: 0.8;
+}
+
+.tab-content{
+  margin-top: 20px;
+}
+
+.btns{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.btns > a{
+  width: 125px;
+  padding: 0;
+}

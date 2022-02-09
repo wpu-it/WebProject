@@ -5,8 +5,7 @@
 
 .main{
   background-attachment: fixed;
-  background-image: url('https://i.pinimg.com/736x/b0/f8/22/b0f822ddc1533b7274bc271767be2f72.jpg');
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
@@ -32,4 +31,12 @@
 .btns-cont{
   display: flex;
   justify-content: space-between;
+}
+
+footer{
+  height: 50px;
+  background-color: #5de940;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 25px;
 }

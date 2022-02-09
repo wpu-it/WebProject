@@ -3,12 +3,16 @@ import {AuthApiService} from "./auth/auth-api.service";
 import {FantoursApiService} from "./fantours/fantours-api.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {UsersApiService} from "./users/users-api.service";
+import {NewsApiService} from "./news/news-api.service";
+import {OrdersApiService} from "./orders/orders-api.service";
 
 @NgModule({
   providers: [
     AuthApiService,
     FantoursApiService,
-    UsersApiService
+    UsersApiService,
+    NewsApiService,
+    OrdersApiService
   ],
   exports: [],
   imports: [

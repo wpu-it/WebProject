@@ -43,5 +43,14 @@ namespace FanToursAPI.Business.Services
         {
             await uow.NewsPicturesRepository.Update(mapper.Mapper.Map<NewsPicture>(entity));
         }
+
+        public async Task RemoveByNewsId(int newsId)
+        {
+            var pics = await GetAll();
+            foreach (var pic in pics)
+            {
+                if (pic.NewsId == newsId) await Remove(pic.Id);
+            }
+        }
     }
 }

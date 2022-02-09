@@ -1,1 +1,19 @@
-<h1>Admin component</h1>
+<div class="central-container">
+  <div style="min-height: 100%">
+    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="onChange($event)">
+      <mat-tab label="Fan tours">
+        <div class="tab-content">
+        </div>
+      </mat-tab>
+      <mat-tab label="Orders">
+        <div class="tab-content">
+        </div>
+      </mat-tab>
+      <mat-tab label="News">
+        <div class="tab-content">
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <router-outlet></router-outlet>
+  </div>
+</div>

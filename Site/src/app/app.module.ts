@@ -16,6 +16,8 @@ import {AdminAuthGuard} from "./shared/guards/admin-auth.guard";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {QueryHttpInterceptor} from "./shared/http/query-http.interceptor";
 import {CheckAdminGuard} from "./shared/guards/check-admin.guard";
+import {NewsModule} from "./user/news/news.module";
+import {OrdersModule} from "./user/orders/orders.module";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {CheckAdminGuard} from "./shared/guards/check-admin.guard";
     SharedModule,
     AuthModule,
     AdminModule,
-    DashboardModule
+    DashboardModule,
+    NewsModule,
+    OrdersModule
   ],
   providers: [
     BrowserLocalStorage,

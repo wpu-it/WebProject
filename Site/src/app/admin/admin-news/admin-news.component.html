@@ -1,0 +1,18 @@
+<div>
+  <h1 style="margin-left: 41%;">News editor</h1>
+  <div class="btns">
+    <a routerLink="add"
+       mat-raised-button style="background-color: #6bb9e1; margin-bottom: 10px;">Add new item</a>
+  </div>
+  <router-outlet (deactivate)="deactivate()"></router-outlet>
+  <ng-container *ngIf="this.news$ | async as news">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 35px;" *ngIf="news.length != 0">
+      <admin-new *ngFor="let new of news" [news]="new"></admin-new>
+    </div>
+    <h1 style="margin-left: 20px; margin-top: 20px;" *ngIf="news.length == 0">There is no news yet...</h1>
+  </ng-container>
+  <mat-paginator style="margin-top: 20px;" (page)="onPaginatorClick($event)"
+                 [length]="totalResults"
+                 [pageSize]="pageSize"
+                 aria-label="Select page"></mat-paginator>
+</div>

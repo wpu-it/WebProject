@@ -12,7 +12,7 @@ namespace FanToursAPI.Models.FanTour
         public string Schedule { get; set; }
         public decimal TicketPrice { get; set; }
         public decimal PriceWithoutTicket { get; set; }
-        public byte[] Picture { get; set; }
+        public string Photo { get; set; }
         public int Quantity { get; set; }
     }
 }

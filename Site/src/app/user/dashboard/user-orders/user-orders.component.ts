@@ -1,9 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {Observable, of} from "rxjs";
-import {Order} from "../../interfaces";
 import {UsersService} from "../users.service";
 import {ActivatedRoute} from "@angular/router";
 import {tap} from "rxjs/operators";
+import {Order} from "../../orders/orders.interfaces";
 
 @Component({
   selector: 'user-orders',

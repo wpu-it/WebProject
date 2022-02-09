@@ -87,7 +87,7 @@ namespace FanToursAPI.Controllers
             var user = await usersService.Get(model.UserId);
             if (user is null) return BadRequest("User not found.");
             var words = model.NewPhoto.Split(',');
-            //await userPicturesService.Remove(user.Picture.Id);
+            await userPicturesService.Remove(user.Picture.Id);
             await userPicturesService.Create(new UserPictureDTO { Name = $"{user.Email} photo", Content = Convert.FromBase64String(words[1]), UserId = user.Id });
             user = await usersService.Get(model.UserId);
             var mappedUser = mapper.Mapper.Map<UserModel>(user);

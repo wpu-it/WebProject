@@ -9,6 +9,20 @@ import {Router} from "@angular/router";
 })
 export class AdminComponent{
   constructor(
+    private readonly router: Router
   ) {
+    this.router.navigate(['admin/fantours']);
+  }
+
+  onActivate(event: any){
+    window.scroll(window.innerWidth,window.innerHeight);
+  }
+
+  onChange(event: any){
+    let path = event.tab.textLabel.toLowerCase();
+    let arr = path.split(' ');
+    path = '';
+    for(let i =0; i< arr.length;i++) path += arr[i];
+    this.router.navigate(['admin/' + path]);
   }
 }

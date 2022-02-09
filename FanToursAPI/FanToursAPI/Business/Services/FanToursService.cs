@@ -43,5 +43,15 @@ namespace FanToursAPI.Business.Services
         {
             await uow.FanToursRepository.Update(mapper.Mapper.Map<FanTour>(entity));
         }
+
+        public async Task<FanTourDTO> GetByTitle(string title)
+        {
+            var tours = await GetAll();
+            foreach (var tour in tours)
+            {
+                if (tour.Title == title) return tour;
+            }
+            return null;
+        }
     }
 }

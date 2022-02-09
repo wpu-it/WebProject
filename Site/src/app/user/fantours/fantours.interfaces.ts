@@ -5,5 +5,6 @@ export interface Fantour{
   schedule: string;
   priceWithoutTicket: number;
   ticketPrice: number;
-  photoUrl: string;
+  photo: string;
+  quantity: number;
 }

@@ -1,0 +1,97 @@
+<div style="margin-top: 20px; margin-left: 35%;">
+  <form class="form" [formGroup]="form">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Enter title..." formControlName="title">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['title'].errors">
+            <div *ngIf="form.controls['title'].errors.required" class="mat-error">Title is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Enter description..." formControlName="description">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['description'].errors">
+            <div *ngIf="form.controls['description'].errors.required" class="mat-error">Description is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Schedule</mat-label>
+        <input matInput placeholder="Enter schedule..." formControlName="schedule">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['schedule'].errors">
+            <div *ngIf="form.controls['schedule'].errors.required" class="mat-error">Schedule is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Price without ticket</mat-label>
+        <input matInput placeholder="Enter price without ticket..." formControlName="priceWithoutTicket">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['priceWithoutTicket'].errors">
+            <div *ngIf="form.controls['priceWithoutTicket'].errors.required" class="mat-error">Price without ticket is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Ticket price</mat-label>
+        <input matInput placeholder="Enter ticket price..." formControlName="ticketPrice">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['ticketPrice'].errors">
+            <div *ngIf="form.controls['ticketPrice'].errors.required" class="mat-error">Ticket price is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Quantity</mat-label>
+        <input type="number" matInput placeholder="Enter quantity..." formControlName="quantity">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint style="font-weight: bold">
+          <div *ngIf="form.controls['quantity'].errors">
+            <div *ngIf="form.controls['quantity'].errors.required" class="mat-error">Quantity is required</div>
+          </div>
+        </mat-hint>
+
+      </mat-form-field>
+    </p>
+    <p>
+    <div style="display:flex; flex-direction: column">
+      <mat-label>Photo</mat-label>
+      <input type="file" accept=".jpg" (change)="onPhotoChange($event)">
+    </div>
+    <mat-hint style="font-weight: bold">
+      <div *ngIf="form.controls['photo'].errors">
+        <div *ngIf="form.controls['photo'].errors.required" class="mat-error">Photo is required</div>
+      </div>
+    </mat-hint>
+    <div *ngIf="!isConfirmed">
+      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+    </div>
+    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="onAddClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
+  </form>
+</div>

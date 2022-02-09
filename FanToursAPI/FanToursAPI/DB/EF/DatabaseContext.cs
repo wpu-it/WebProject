@@ -49,6 +49,13 @@ namespace FanToursAPI.DB.EF
                 fs.Read(welcomeContent, 0, welcomeContent.Length);
             }
 
+            byte[] backContent;
+            using (FileStream fs = new FileStream(@"C:\Users\prim5\Downloads\Background.jpg", FileMode.Open))
+            {
+                backContent = new byte[fs.Length];
+                fs.Read(backContent, 0, backContent.Length);
+            }
+
             modelBuilder.Entity<User>().HasData(new User[]
             {
                 new User { Id = 1, Email = "admin@gmail.com", Password = mD5Service.Hash("admin"), IsAdmin = true }
@@ -57,7 +64,8 @@ namespace FanToursAPI.DB.EF
             modelBuilder.Entity<Picture>().HasData(new Picture[]
             {
                 new Picture { Id = 1, Name = "Logo", Content = logoContent },
-                new Picture { Id = 2, Name = "Welcome", Content = welcomeContent }
+                new Picture { Id = 2, Name = "Welcome", Content = welcomeContent },
+                new Picture { Id = 3, Name = "Background", Content = backContent }
             });
         }
     }

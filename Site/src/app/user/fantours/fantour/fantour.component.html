@@ -2,7 +2,7 @@
   <mat-card-title-group>
     <mat-card-title>{{fantour.title}}</mat-card-title>
 
-    <img mat-card-sm-image src="{{fantour.photoUrl}}" >
+    <img mat-card-sm-image src="{{fantour.photo}}" >
   </mat-card-title-group>
   <mat-card-content>
     <div class="bold-underline">Description:</div>
@@ -11,5 +11,14 @@
   <mat-card-content>
     <div class="bold-underline">Schedule:</div>
     {{fantour.schedule}}
+  </mat-card-content>
+  <mat-card-content>
+    <div>Price without ticket: {{fantour.priceWithoutTicket}} $</div>
+  </mat-card-content>
+  <mat-card-content>
+    <div>Price with ticket: {{fantour.priceWithoutTicket + fantour.ticketPrice}} $</div>
+  </mat-card-content>
+  <mat-card-content>
+    <div>Count of places: {{fantour.quantity}}</div>
   </mat-card-content>
 </mat-card>

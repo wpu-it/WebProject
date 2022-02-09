@@ -12,7 +12,12 @@
           <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
             <fantour style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></fantour>
           </div>
+          <h1 style="margin-top: 20px;" *ngIf="fantours.length == 0">There is no fantours yet. Come back again later...</h1>
         </ng-container>
+        <mat-paginator style="margin-top: 20px;" (page)="onPaginatorClick($event)"
+                       [length]="totalResults"
+                       [pageSize]="pageSize"
+                       aria-label="Select page"></mat-paginator>
       </div>
     </div>
     <div class="right-container">

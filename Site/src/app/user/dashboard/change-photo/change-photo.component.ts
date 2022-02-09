@@ -15,6 +15,8 @@ export class ChangePhotoComponent implements OnInit{
   form: FormGroup;
   disabled = false;
   userId: number;
+  isConfirmed = true;
+  errors: HttpErrorResponse[] = [];
 
   constructor(
     private readonly usersService: UsersService,
@@ -34,8 +36,19 @@ export class ChangePhotoComponent implements OnInit{
   onEditClick(){
     if(this.form.valid){
       const { photo } = this.form.value;
+      this.errors = [];
       this.disabled = true;
-      this.usersService.updateUsersPhoto(photo, this.userId).subscribe();
+      this.usersService.updateUsersPhoto(photo, this.userId).pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.isConfirmed = false;
+          this.disabled = false;
+          if(!this.errors.includes(err.error)){
+            this.errors.push(err.error);
+          }
+          return [];
+        }),
+        take(1)
+      ).subscribe();
     }
   }
 
