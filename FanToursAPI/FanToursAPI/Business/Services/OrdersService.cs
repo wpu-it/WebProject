@@ -38,6 +38,18 @@ namespace FanToursAPI.Business.Services
             await uow.OrdersRepository.Remove(id);
         }
 
+        public async Task RemoveByFantourId(int id)
+        {
+            var orders = await GetAll();
+            if(orders != null)
+            {
+                foreach (var order in orders)
+                {
+                    if (order.FanTourId == id) await Remove(order.Id);
+                }
+            }
+        }
+
         public async Task Update(OrderDTO entity)
         {
             await uow.OrdersRepository.Update(mapper.Mapper.Map<Order>(entity));

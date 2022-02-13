@@ -12,7 +12,7 @@ export class CheckAdminGuard implements CanActivate{
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if(this.authService.role == 'admin'){
-      this.router.navigate(['admin']);
+      this.router.navigate(['admin/fantours']);
       return false;
     }
     return true;

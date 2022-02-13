@@ -24,18 +24,17 @@
       </div>
   </mat-toolbar-row>
 </mat-toolbar>
-  <div class="main" style="height: 200%;" [ngStyle]="{ 'background-image': 'url(' + backgroundUrl + ')'}">
-    <router-outlet></router-outlet>
-  </div>
+<div class="main" style="height: 118%;" [ngStyle]="{ 'background-image': 'url(' + backgroundUrl + ')'}">
+  <router-outlet></router-outlet>
+</div>
 <footer>
-  <div class="social">
-    <div><a href="#">H</a></div>
-    <div><a href="#"></a></div>
-    <div><a href="#"></a></div>
-    <div><a href="#"></a></div>
-    <div><a href="#"></a></div>
-  </div>
-  <div class="copyright">
-    <div>&copy; UNTITLED 2019</div>
-  </div>
+    <div class="social">
+      <div style="font-weight: bold">Our socials:</div>
+      <a href="#"><img src="{{facebookLogo}}" alt=""></a>
+      <a href="#"><img src="{{instaLogo}}" alt=""></a>
+      <a href="#"><img src="{{twitterLogo}}" alt=""></a>
+    </div>
+    <div class="copyright">
+      <div style="font-weight: bold; font-size: 18px;">&copy; Football Fan Tours 2019</div>
+    </div>
 </footer>

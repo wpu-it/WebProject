@@ -19,11 +19,13 @@ namespace FanToursAPI.Controllers
         AuthService authService;
         UserPicturesService userPicturesService;
         UsersService usersService;
-        public AuthController(AuthService authService, UserPicturesService userPicturesService, UsersService usersService)
+        SQLProtectService sQLProtectService;
+        public AuthController(AuthService authService, UserPicturesService userPicturesService, UsersService usersService, SQLProtectService sQLProtectService)
         {
             this.authService = authService;
             this.userPicturesService = userPicturesService;
             this.usersService = usersService;
+            this.sQLProtectService = sQLProtectService;
         }
 
         [HttpPost]
@@ -37,7 +39,7 @@ namespace FanToursAPI.Controllers
                 return BadRequest("Validation error");
             }
             var response = await authService.Login(model);
-            if (response.AccessToken == "") return BadRequest("Same user wasn't found");
+            if (response.AccessToken == "") return BadRequest("Sign in failed");
             return new JsonResult(response);
         }
 
@@ -51,6 +53,9 @@ namespace FanToursAPI.Controllers
             {
                 return BadRequest("Validation error");
             }
+            if (!sQLProtectService.isValid(model.Fullname)) return BadRequest("Invalid full name");
+            if (!sQLProtectService.isValid(model.Email)) return BadRequest("Invalid email");
+            if (!sQLProtectService.isValid(model.Password)) return BadRequest("Invalid password");
             var response = await authService.Register(model);
             if (response.AccessToken == "") return BadRequest("User already exists");
             var user = await usersService.GetUserByAccessToken(response.AccessToken);

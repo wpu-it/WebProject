@@ -1,0 +1,42 @@
+.containers{
+  display: flex;
+  height: 100%;
+}
+
+.left-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background: #47a5ef;
+  opacity: 0.9;
+}
+
+.left-container-hidden{
+  background: none;
+  height: 100%;
+  box-sizing: border-box;
+  width: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
+  opacity: 0.9;
+}
+
+.central-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 50%;
+  background: #47a5ef;
+  opacity: 0.9;
+}
+
+.right-container{
+  height: 100%;
+  box-sizing: border-box;
+  width: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background: #47a5ef;
+  opacity: 0.9;
+}

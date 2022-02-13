@@ -17,6 +17,8 @@ export class AdminOrdersComponent{
   rightPageIdx: number = 1;
   pageSize: number = 2;
 
+  orderId : number = 1;
+
   constructor(
     private readonly ordersService: OrdersService
   ) {
@@ -38,8 +40,12 @@ export class AdminOrdersComponent{
     this.getOrders();
   }
 
-  deactivate(){
+  changeEvent(){
     this.getOrders();
+  }
+
+  updateEvent(id: number){
+    this.orderId = id;
   }
 
   getOrders(){

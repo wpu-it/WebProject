@@ -3,11 +3,13 @@
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Title</mat-label>
-        <input matInput placeholder="Enter title..." formControlName="title">
+        <textarea matInput placeholder="Enter title..." formControlName="title"></textarea>
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['title'].errors">
-            <div *ngIf="form.controls['title'].errors.required" class="mat-error">Title is required</div>
+            <div *ngIf="form.controls['title'].errors.required" style="font-weight: bolder">Title is required</div>
+            <div *ngIf="form.controls['title'].errors.pattern" style="font-weight: bolder">Title must start with word and contain words</div>
+            <div *ngIf="form.controls['title'].errors.maxlength" style="font-weight: bolder">Max length - 100 symbols</div>
           </div>
         </mat-hint>
 
@@ -16,11 +18,13 @@
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Text</mat-label>
-        <input matInput placeholder="Enter text..." formControlName="text">
+        <textarea matInput placeholder="Enter text..." formControlName="text"></textarea>
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['text'].errors">
-            <div *ngIf="form.controls['text'].errors.required" class="mat-error">Text is required</div>
+            <div *ngIf="form.controls['text'].errors.required" style="font-weight: bolder">Text is required</div>
+            <div *ngIf="form.controls['text'].errors.pattern" style="font-weight: bolder">Text must start with word and contain words</div>
+            <div *ngIf="form.controls['text'].errors.maxlength" style="font-weight: bolder">Max length - 500 symbols</div>
           </div>
         </mat-hint>
 
@@ -31,15 +35,15 @@
       <mat-label>Photo</mat-label>
       <input type="file" accept=".jpg" (change)="onPhotoChange($event)">
     </div>
-    <mat-hint style="font-weight: bold">
+    <mat-hint>
       <div *ngIf="form.controls['photo'].errors">
-        <div *ngIf="form.controls['photo'].errors.required" class="mat-error">Photo is required</div>
+        <div *ngIf="form.controls['photo'].errors.required" style="font-weight: bolder">Photo is required</div>
       </div>
     </mat-hint>
     <div *ngIf="!isConfirmed">
-      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+      <div *ngFor="let err of errors" style="font-weight: bold">{{err}}</div>
     </div>
-    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="onAddClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
-    <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
+    <button style="margin-top: 10px;" mat-raised-button (click)="onAddClick()"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <a id="popup-close" href="javascript:PopUpHide(1)" (click)="onCloseClick()" style="margin-left: 10px;" mat-raised-button color="warn"><mat-icon>close</mat-icon> Close</a>
   </form>
 </div>

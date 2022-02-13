@@ -12,16 +12,29 @@ import {FileChangeEvent} from "@angular/compiler-cli/src/perform_watch";
 })
 export class RegisterComponent{
   isRegistered = true;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
   form: FormGroup;
   disabled = false;
   constructor(
     private readonly authService: AuthService
   ){
     this.form = new FormGroup({
-      'fullname': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'password': new FormControl('', Validators.required),
+      'fullname': new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[A-Z,a-z, ]+$'),
+        Validators.maxLength(50)
+      ]),
+      'email': new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[\\w.]+[@][A-Za-z]+[.]+[A-Za-z.]+$'),
+        Validators.maxLength(50)
+      ]),
+      'password': new FormControl('', [
+        Validators.required,
+        Validators.pattern('(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}'),
+        Validators.minLength(8),
+        Validators.maxLength(50)
+      ]),
       'confirmPassword': new FormControl('', Validators.required),
       'photo': new FormControl(null, Validators.required)
     });
@@ -39,7 +52,25 @@ export class RegisterComponent{
             this.isRegistered = false;
             this.disabled = false;
             if(!this.errors.includes(err.error)){
-              this.errors.push(err.error);
+              if(typeof err.error == "string") this.errors.push(err.error);
+              else{
+                let errors = err.error.errors;
+                if(errors.fullname != undefined){
+                  errors.fullname.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.email != undefined){
+                  errors.email.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.password != undefined){
+                  errors.password.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.confirmPassword != undefined){
+                  errors.confirmPassword.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.photo != undefined){
+                  errors.photo.forEach((err: string) => this.errors.push(err));
+                }
+              }
             }
             return [];
           }),

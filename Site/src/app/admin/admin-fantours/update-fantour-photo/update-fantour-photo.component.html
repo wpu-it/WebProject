@@ -5,16 +5,16 @@
       <mat-label>Photo</mat-label>
       <input type="file" accept=".jpg" (change)="onPhotoChange($event)">
     </div>
-    <mat-hint style="font-weight: bold">
+    <mat-hint>
       <div *ngIf="form.controls['photo'].errors">
-        <div *ngIf="form.controls['photo'].errors.required" class="mat-error">Photo is required</div>
+        <div *ngIf="form.controls['photo'].errors.required" style="font-weight: bolder">Photo is required</div>
       </div>
     </mat-hint>
     <p></p>
     <div *ngIf="!isConfirmed">
-      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+      <div *ngFor="let err of errors" style="font-weight: bold">{{err}}</div>
     </div>
-    <button mat-raised-button color="primary" (click)="onEditClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
-    <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
+    <button mat-raised-button (click)="onEditClick()"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <a id="popup-3-close" href="javascript:PopUpHide(3)" style="margin-left: 10px;" mat-raised-button color="warn"><mat-icon>close</mat-icon> Close</a>
   </form>
 </div>

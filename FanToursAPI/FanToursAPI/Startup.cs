@@ -84,6 +84,7 @@ namespace FanToursAPI
             services.AddTransient<MD5Service>();
             services.AddTransient<AuthService>();
             services.AddTransient<JwtService>();
+            services.AddTransient<SQLProtectService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FanToursAPI", Version = "v1" });

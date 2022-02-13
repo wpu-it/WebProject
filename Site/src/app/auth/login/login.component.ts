@@ -14,14 +14,14 @@ export class LoginComponent{
   form: FormGroup;
   disabled = false;
   isLogined = true;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
   constructor(
     private readonly authService: AuthService,
     private readonly localStorage: BrowserLocalStorage
   ){
     this.form = new FormGroup({
-      'email': new FormControl('admin@gmail.com', Validators.required),
-      'password': new FormControl('123456', Validators.required)
+      'email': new FormControl('vasya@gmail.com', Validators.required),
+      'password': new FormControl('Aa12345%', Validators.required)
     });
   }
 
@@ -35,7 +35,16 @@ export class LoginComponent{
           this.disabled = false;
           this.isLogined = false;
           if(!this.errors.includes(err.error)){
-            this.errors.push(err.error);
+            if(typeof err.error == "string") this.errors.push(err.error);
+            else{
+              let errors = err.error.errors;
+              if(errors.email != undefined){
+                errors.email.forEach((err: string) => this.errors.push(err));
+              }
+              if(errors.password != undefined){
+                errors.password.forEach((err: string) => this.errors.push(err));
+              }
+            }
           }
           return [];
         }),

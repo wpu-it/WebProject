@@ -2,9 +2,11 @@
 using FanToursAPI.Business.Services;
 using FanToursAPI.Models.Automapper;
 using FanToursAPI.Models.FanTour;
+using FanToursAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,10 +19,15 @@ namespace FanToursAPI.Controllers
         ObjectMapperModels mapper = ObjectMapperModels.Instance;
         FanToursService fanToursService;
         FanToursPicturesService fanToursPicturesService;
-        public FanToursController(FanToursService fanToursService, FanToursPicturesService fanToursPicturesService)
+        OrdersService ordersService;
+        SQLProtectService sQLProtectService;
+        public FanToursController(FanToursService fanToursService, FanToursPicturesService fanToursPicturesService,
+            OrdersService ordersService, SQLProtectService sQLProtectService)
         {
             this.fanToursService = fanToursService;
             this.fanToursPicturesService = fanToursPicturesService;
+            this.ordersService = ordersService;
+            this.sQLProtectService = sQLProtectService;
         }
 
         [HttpGet]
@@ -58,6 +65,15 @@ namespace FanToursAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateFanTour([FromBody] CreateFanTourModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.Title)) return BadRequest("Invalid title");
+            if (!sQLProtectService.isValid(model.Description)) return BadRequest("Invalid description");
+            if (!sQLProtectService.isValid(model.Schedule)) return BadRequest("Invalid schedule");
             var tour = mapper.Mapper.Map<FanTourDTO>(model);
             await fanToursService.Create(tour);
             tour = await fanToursService.GetByTitle(model.Title);
@@ -78,6 +94,15 @@ namespace FanToursAPI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateFanTour([FromBody] UpdateFanTourModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.Title)) return BadRequest("Invalid title");
+            if (!sQLProtectService.isValid(model.Description)) return BadRequest("Invalid description");
+            if (!sQLProtectService.isValid(model.Schedule)) return BadRequest("Invalid schedule");
             var tour = await fanToursService.Get(model.Id);
             if (tour is null) return BadRequest("Tour not found");
             tour.Title = model.Title;
@@ -102,6 +127,12 @@ namespace FanToursAPI.Controllers
         [Route("update/photo")]
         public async Task<ActionResult> UpdateFantoursPhoto(UpdateFantourPhotoModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
             var tour = await fanToursService.Get(model.FanTourId);
             if (tour is null) return BadRequest("Tour not found");
             var words = model.NewPhoto.Split(',');
@@ -124,6 +155,7 @@ namespace FanToursAPI.Controllers
             if (await fanToursService.Get(id) == null) return BadRequest("Tour not found");
             await fanToursService.Remove(id);
             await fanToursPicturesService.RemoveByFantourId(id);
+            await ordersService.RemoveByFantourId(id);
             var tours = await fanToursService.GetAll();
             var mappedTours = mapper.Mapper.Map<List<FanTourModel>>(tours);
             for (int i = 0; i < tours.Count; i++)

@@ -24,13 +24,6 @@ namespace FanToursAPI.DB.EF
             this.mD5Service = mD5Service;
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
-
-            //Just an example
-            //User user = new User { Email = "admin@gmail.com", Password = mD5Service.Hash("admin"), IsAdmin = true };
-            //Users.Add(user);
-            //UserPicture picture = new UserPicture { Name = "Logo", Content = logoContent, User = user };
-            //UserPictures.Add(picture);
-            //SaveChanges();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -56,6 +49,34 @@ namespace FanToursAPI.DB.EF
                 fs.Read(backContent, 0, backContent.Length);
             }
 
+            byte[] adminContent;
+            using (FileStream fs = new FileStream(@"C:\Users\prim5\Downloads\Admin.jpg", FileMode.Open))
+            {
+                adminContent = new byte[fs.Length];
+                fs.Read(adminContent, 0, adminContent.Length);
+            }
+
+            byte[] facebookLogo;
+            using (FileStream fs = new FileStream(@"C:\Users\prim5\Downloads\Facebook logo.jpg", FileMode.Open))
+            {
+                facebookLogo = new byte[fs.Length];
+                fs.Read(facebookLogo, 0, facebookLogo.Length);
+            }
+
+            byte[] instaLogo;
+            using (FileStream fs = new FileStream(@"C:\Users\prim5\Downloads\Insta logo.jpg", FileMode.Open))
+            {
+                instaLogo = new byte[fs.Length];
+                fs.Read(instaLogo, 0, instaLogo.Length);
+            }
+
+            byte[] twitterLogo;
+            using (FileStream fs = new FileStream(@"C:\Users\prim5\Downloads\Twitter logo.jpg", FileMode.Open))
+            {
+                twitterLogo = new byte[fs.Length];
+                fs.Read(twitterLogo, 0, twitterLogo.Length);
+            }
+
             modelBuilder.Entity<User>().HasData(new User[]
             {
                 new User { Id = 1, Email = "admin@gmail.com", Password = mD5Service.Hash("admin"), IsAdmin = true }
@@ -65,7 +86,11 @@ namespace FanToursAPI.DB.EF
             {
                 new Picture { Id = 1, Name = "Logo", Content = logoContent },
                 new Picture { Id = 2, Name = "Welcome", Content = welcomeContent },
-                new Picture { Id = 3, Name = "Background", Content = backContent }
+                new Picture { Id = 3, Name = "Background", Content = backContent },
+                new Picture { Id = 4, Name = "Admin dashboard", Content = adminContent},
+                new Picture { Id = 5, Name = "Facebook logo", Content = facebookLogo},
+                new Picture { Id = 6, Name = "Insta logo", Content = instaLogo},
+                new Picture { Id = 7, Name = "Twitter logo", Content = twitterLogo}
             });
         }
     }

@@ -16,8 +16,8 @@ export class FantoursComponent implements OnInit{
 
   totalResults: number;
   leftPageIdx: number = 0;
-  rightPageIdx: number = 5;
-  pageSize: number = 6;
+  rightPageIdx: number = 3;
+  pageSize: number = 4;
 
   constructor(
     readonly fantoursService: FantoursService,
@@ -28,25 +28,26 @@ export class FantoursComponent implements OnInit{
 
   onPaginatorClick(event: PageEvent){
     if(Number(event.previousPageIndex) < event.pageIndex){
-      this.leftPageIdx += 2;
-      this.rightPageIdx += 2;
+      this.leftPageIdx += 4;
+      this.rightPageIdx += 4;
     }
     else{
-      this.leftPageIdx -= 2;
-      this.rightPageIdx -= 2;
+      this.leftPageIdx -= 4;
+      this.rightPageIdx -= 4;
     }
     this.getFantours();
+    window.scroll(0, 0);
   }
 
   ngOnInit(): void {
-    if(this.authService.role == 'admin'){
-      this.router.navigate(['admin']);
-      this.getFantours();
-    }
+    this.getFantours();
   }
 
   getFantours(){
     this.fantoursService.fantours$.subscribe(tours => {
+      for(let i = 0; i < tours.length; i++){
+        if(tours[i].quantity < 0) tours.splice(i, 1);
+      }
       this.totalResults = tours.length;
       let result = tours.slice(this.leftPageIdx, this.rightPageIdx + 1);
       this.fantours$ = of(result);

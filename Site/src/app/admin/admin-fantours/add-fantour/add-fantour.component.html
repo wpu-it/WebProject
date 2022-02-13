@@ -3,11 +3,13 @@
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Title</mat-label>
-        <input matInput placeholder="Enter title..." formControlName="title">
+        <textarea matInput placeholder="Enter title..." formControlName="title"></textarea>
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['title'].errors">
-            <div *ngIf="form.controls['title'].errors.required" class="mat-error">Title is required</div>
+            <div *ngIf="form.controls['title'].errors.required" style="font-weight: bolder">Title is required</div>
+            <div *ngIf="form.controls['title'].errors.pattern" style="font-weight: bolder">Title must start with word and contain words</div>
+            <div *ngIf="form.controls['title'].errors.maxlength" style="font-weight: bolder">Max length - 100 symbols</div>
           </div>
         </mat-hint>
 
@@ -16,11 +18,13 @@
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Description</mat-label>
-        <input matInput placeholder="Enter description..." formControlName="description">
+        <textarea matInput placeholder="Enter description..." formControlName="description"></textarea>
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['description'].errors">
-            <div *ngIf="form.controls['description'].errors.required" class="mat-error">Description is required</div>
+            <div *ngIf="form.controls['description'].errors.required" style="font-weight: bolder">Description is required</div>
+            <div *ngIf="form.controls['description'].errors.pattern" style="font-weight: bolder">Description must start with word and contain words</div>
+            <div *ngIf="form.controls['description'].errors.maxlength" style="font-weight: bolder">Max length - 500 symbols</div>
           </div>
         </mat-hint>
 
@@ -29,11 +33,13 @@
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Schedule</mat-label>
-        <input matInput placeholder="Enter schedule..." formControlName="schedule">
+        <textarea matInput placeholder="Enter schedule..." formControlName="schedule"></textarea>
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['schedule'].errors">
-            <div *ngIf="form.controls['schedule'].errors.required" class="mat-error">Schedule is required</div>
+            <div *ngIf="form.controls['schedule'].errors.required" style="font-weight: bolder">Schedule is required</div>
+            <div *ngIf="form.controls['schedule'].errors.pattern" style="font-weight: bolder">Schedule must start with word and contain words</div>
+            <div *ngIf="form.controls['schedule'].errors.maxlength" style="font-weight: bolder">Max length - 500 symbols</div>
           </div>
         </mat-hint>
 
@@ -44,9 +50,10 @@
         <mat-label>Price without ticket</mat-label>
         <input matInput placeholder="Enter price without ticket..." formControlName="priceWithoutTicket">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['priceWithoutTicket'].errors">
-            <div *ngIf="form.controls['priceWithoutTicket'].errors.required" class="mat-error">Price without ticket is required</div>
+            <div *ngIf="form.controls['priceWithoutTicket'].errors.required" style="font-weight: bolder">Price without ticket is required</div>
+            <div *ngIf="form.controls['priceWithoutTicket'].errors.pattern" style="font-weight: bolder">Write it in format "digits.digits"</div>
           </div>
         </mat-hint>
 
@@ -57,9 +64,10 @@
         <mat-label>Ticket price</mat-label>
         <input matInput placeholder="Enter ticket price..." formControlName="ticketPrice">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['ticketPrice'].errors">
-            <div *ngIf="form.controls['ticketPrice'].errors.required" class="mat-error">Ticket price is required</div>
+            <div *ngIf="form.controls['ticketPrice'].errors.required" style="font-weight: bolder">Ticket price is required</div>
+            <div *ngIf="form.controls['ticketPrice'].errors.pattern" style="font-weight: bolder">Write it in format "digits.digits"</div>
           </div>
         </mat-hint>
 
@@ -70,9 +78,10 @@
         <mat-label>Quantity</mat-label>
         <input type="number" matInput placeholder="Enter quantity..." formControlName="quantity">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['quantity'].errors">
-            <div *ngIf="form.controls['quantity'].errors.required" class="mat-error">Quantity is required</div>
+            <div *ngIf="form.controls['quantity'].errors.required" style="font-weight: bolder">Quantity is required</div>
+            <div *ngIf="form.controls['quantity'].errors.min" style="font-weight: bolder">Min value = 1</div>
           </div>
         </mat-hint>
 
@@ -83,15 +92,15 @@
       <mat-label>Photo</mat-label>
       <input type="file" accept=".jpg" (change)="onPhotoChange($event)">
     </div>
-    <mat-hint style="font-weight: bold">
+    <mat-hint>
       <div *ngIf="form.controls['photo'].errors">
-        <div *ngIf="form.controls['photo'].errors.required" class="mat-error">Photo is required</div>
+        <div *ngIf="form.controls['photo'].errors.required" style="font-weight: bolder">Photo is required</div>
       </div>
     </mat-hint>
     <div *ngIf="!isConfirmed">
-      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+      <div *ngFor="let err of errors" style="font-weight: bold">{{err}}</div>
     </div>
-    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="onAddClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
-    <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
+    <button style="margin-top: 10px;" mat-raised-button (click)="onAddClick()"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <a id="popup-close" href="javascript:PopUpHide(1)" (click)="onCloseClick()" style="margin-left: 10px;" mat-raised-button color="warn"><mat-icon>close</mat-icon> Close</a>
   </form>
 </div>

@@ -24,13 +24,22 @@ import {AdminFantoursComponent} from "./admin/admin-fantours/admin-fantours.comp
 import {AdminNewsComponent} from "./admin/admin-news/admin-news.component";
 import {AdminOrdersComponent} from "./admin/admin-orders/admin-orders.component";
 import {UpdateOrderComponent} from "./admin/admin-orders/update-order/update-order.component";
+import {UserMainComponent} from "./user/user-main.component";
+import {NewsInfoComponent} from "./user/news/news-info/news-info.component";
+import {AppComponent} from "./app.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: FantoursComponent,
+    component: UserMainComponent,
     canActivate: [
       CheckAdminGuard
+    ],
+    children:[
+      {
+        path: 'news/:id',
+        component: NewsInfoComponent
+      }
     ]
   },
   {

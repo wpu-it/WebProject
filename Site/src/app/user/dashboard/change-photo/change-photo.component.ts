@@ -16,14 +16,14 @@ export class ChangePhotoComponent implements OnInit{
   disabled = false;
   userId: number;
   isConfirmed = true;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
 
   constructor(
     private readonly usersService: UsersService,
     private readonly router: Router
   ){
     this.form = new FormGroup({
-      'photo': new FormControl('', Validators.required)
+      'photo': new FormControl('', )
     });
   }
 
@@ -38,17 +38,30 @@ export class ChangePhotoComponent implements OnInit{
       const { photo } = this.form.value;
       this.errors = [];
       this.disabled = true;
-      this.usersService.updateUsersPhoto(photo, this.userId).pipe(
-        catchError((err: HttpErrorResponse) => {
-          this.isConfirmed = false;
-          this.disabled = false;
-          if(!this.errors.includes(err.error)){
-            this.errors.push(err.error);
-          }
-          return [];
-        }),
-        take(1)
-      ).subscribe();
+      if(photo.length < 1) {
+        this.isConfirmed = false;
+        this.disabled = false;
+        this.errors.push('Photo is required');
+      }
+      if(this.errors.length == 0){
+        this.usersService.updateUsersPhoto(photo, this.userId).pipe(
+          catchError((err: HttpErrorResponse) => {
+            this.isConfirmed = false;
+            this.disabled = false;
+            if(!this.errors.includes(err.error)){
+              if(typeof err.error == "string") this.errors.push(err.error);
+              else{
+                let errors = err.error.errors;
+                if(errors.photo != undefined){
+                  errors.photo.forEach((err: string) => this.errors.push(err));
+                }
+              }
+            }
+            return [];
+          }),
+          take(1)
+        ).subscribe();
+      }
     }
   }
 

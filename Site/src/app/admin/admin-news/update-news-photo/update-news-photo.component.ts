@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FantoursService} from "../../../user/fantours/fantours.service";
@@ -11,17 +11,15 @@ import {catchError, take} from "rxjs/operators";
   templateUrl: 'update-news-photo.component.html',
   styleUrls: ['update-news-photo.component.scss']
 })
-export class UpdateNewsPhotoComponent implements OnInit{
+export class UpdateNewsPhotoComponent{
   form: FormGroup;
-  disabled = false;
-  newsId: number;
+  @Input() newsId: number;
+  @Output() updateEvent = new EventEmitter();
   isConfirmed = true;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
 
   constructor(
-    private readonly newsService: NewsService,
-    private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly newsService: NewsService
   ){
     this.form = new FormGroup({
       'photo': new FormControl('', Validators.required)
@@ -29,36 +27,39 @@ export class UpdateNewsPhotoComponent implements OnInit{
     window.scroll(0, 0);
   }
 
-  ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.newsId = Number(params.id);
-    })
-  }
 
   onEditClick(){
     if(this.form.valid){
       const { photo } = this.form.value;
       this.errors = [];
-      this.disabled = true;
-      this.newsService.updateNewsPhoto(photo, this.newsId).pipe(
-        catchError((err: HttpErrorResponse) => {
-          this.isConfirmed = false;
-          this.disabled = false;
-          if(!this.errors.includes(err.error)){
-            this.errors.push(err.error);
-          }
-          return [];
-        }),
-        take(1)
-      ).subscribe(res => {
-        this.router.navigate(['admin/news']);
-      });
+      if(photo.length < 1){
+        this.isConfirmed = false;
+        this.errors.push('Photo is required')
+      }
+      if(this.errors.length == 0){
+        this.newsService.updateNewsPhoto(photo, this.newsId).pipe(
+          catchError((err: HttpErrorResponse) => {
+            this.isConfirmed = false;
+            if(!this.errors.includes(err.error)){
+              if(typeof err.error == "string") this.errors.push(err.error);
+              else{
+                let errors = err.error.errors;
+                if(errors.photo != undefined){
+                  errors.photo.forEach((err: string) => this.errors.push(err));
+                }
+              }
+            }
+            return [];
+          }),
+          take(1)
+        ).subscribe(res => {
+          let ref = document.getElementById('popup-3-close');
+          ref = ref ? ref : new HTMLElement();
+          ref.click();
+          this.updateEvent.emit();
+        });
+      }
     }
-  }
-
-  onCloseClick(){
-    this.router.navigate(['admin/news']);
-    window.scroll(0, 0);
   }
 
   onPhotoChange(event: any){

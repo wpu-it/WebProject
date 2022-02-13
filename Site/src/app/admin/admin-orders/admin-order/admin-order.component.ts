@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Order} from "../../../user/orders/orders.interfaces";
 import {Router} from "@angular/router";
 import {FantoursService} from "../../../user/fantours/fantours.service";
@@ -11,7 +11,8 @@ import {Fantour} from "../../../user/fantours/fantours.interfaces";
   styleUrls: ['admin-order.component.scss']
 })
 export class AdminOrderComponent{
-  @Input() order: Order = {id: 0, consFullname: '',consEmail: '',consPhoneNumber: '', fanTourId: 0};
+  @Input() order: Order;
+  @Output() editClick = new EventEmitter();
   fantour$: Observable<Fantour>;
 
   constructor(
@@ -24,14 +25,10 @@ export class AdminOrderComponent{
   }
 
   onUpdateClick(){
-    this.router.navigate(['admin/orders/edit/' + this.order.id]);
+    this.editClick.emit(this.order.id);
   }
 
   onRemoveClick(){
     this.router.navigate(['admin/orders/remove/' + this.order.id]);
-  }
-
-  onMakeCompletedClick(){
-    this.router.navigate(['admin/orders/complete/' + this.order.id]);
   }
 }

@@ -1,4 +1,13 @@
-import {Component, OnInit} from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FantoursService} from "../../../user/fantours/fantours.service";
@@ -9,62 +18,81 @@ import {catchError, take} from "rxjs/operators";
 @Component({
   selector: 'update-news',
   templateUrl: 'update-news.component.html',
-  styleUrls: ['update-news.component.scss']
+  styleUrls: ['update-news.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class UpdateNewsComponent implements OnInit{
+export class UpdateNewsComponent implements OnChanges{
   form: FormGroup;
-  disabled = false;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
   isConfirmed = true;
-  newsId: number;
+  @Input() newsId: number = 1;
+  @Output() updateEvent = new EventEmitter();
 
   constructor(
-    private readonly newsService: NewsService,
-    private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly newsService: NewsService
   ) {
     this.form = new FormGroup({
-      'title': new FormControl('', Validators.required),
-      'text': new FormControl('', Validators.required)
+      'title': new FormControl('', [
+        Validators.required,
+        Validators.pattern('(?=.*[A-Za-z])^[A-Za-z]+[^\\>]*'),
+        Validators.maxLength(100)
+      ]),
+      'text': new FormControl('', [
+        Validators.required,
+        Validators.pattern('(?=.*[A-Za-z])^[A-Za-z]+[^\\>]*'),
+        Validators.maxLength(500)
+      ])
     });
-    window.scroll(0, 0);
+    this.getNews();
   }
 
-  ngOnInit(){
-    this.activatedRoute.params.subscribe(params => {
-      this.newsId = Number(params.id);
-      this.newsService.getNewsById(this.newsId).subscribe(news => {
-        this.form.patchValue({
-          title: news.title,
-          text: news.text
-        });
-      })
-    });
+  ngOnChanges(changes: SimpleChanges){
+    this.errors = [];
+    this.getNews();
+  }
+
+  onCloseClick(){
+    this.errors = [];
+    this.getNews();
+  }
+
+  getNews(){
+    this.newsService.getNewsById(this.newsId).subscribe(news => {
+      this.form.patchValue({
+        title: news.title,
+        text: news.text
+      });
+    })
   }
 
   onEditClick(){
     if(this.form.valid){
       const { title, text } = this.form.value;
       this.errors = [];
-      this.disabled = true;
       this.newsService.updateNews(this.newsId, title, text).pipe(
         catchError((err: HttpErrorResponse) => {
           this.isConfirmed = false;
-          this.disabled = false;
           if(!this.errors.includes(err.error)){
-            this.errors.push(err.error);
+            if(typeof err.error == "string") this.errors.push(err.error);
+            else{
+              let errors = err.error.errors;
+              if(errors.title != undefined){
+                errors.title.forEach((err: string) => this.errors.push(err));
+              }
+              if(errors.text != undefined){
+                errors.text.forEach((err: string) => this.errors.push(err));
+              }
+            }
           }
           return [];
         }),
         take(1)
       ).subscribe(res => {
-        this.router.navigate(['admin/news']);
+        let ref = document.getElementById('popup-2-close');
+        ref = ref ? ref : new HTMLElement();
+        ref.click();
+        this.updateEvent.emit();
       });
     }
-  }
-
-  onCloseClick(){
-    this.router.navigate(['admin/news']);
-    window.scroll(0, 0);
   }
 }

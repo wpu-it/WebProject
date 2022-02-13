@@ -5,9 +5,12 @@
         <mat-label>Consumer full name</mat-label>
         <input matInput placeholder="Enter consumer full name..." formControlName="consFullname">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['consFullname'].errors">
-            <div *ngIf="form.controls['consFullname'].errors.required" class="mat-error">Consumer fullname is required</div>
+            <div *ngIf="form.controls['consFullname'].errors.required" style="font-weight: bolder">Consumer fullname is required</div>
+            <div *ngIf="form.controls['consFullname'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
+            <div *ngIf="form.controls['consFullname'].errors.pattern" style="font-weight: bolder">Consumer fullname must be written only with latin
+              letters and spaces</div>
           </div>
         </mat-hint>
       </mat-form-field>
@@ -17,9 +20,24 @@
         <mat-label>Consumer email</mat-label>
         <input matInput placeholder="Enter consumer email..." formControlName="consEmail">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['consEmail'].errors">
-            <div *ngIf="form.controls['consEmail'].errors.required" class="mat-error">Consumer email is required</div>
+            <div *ngIf="form.controls['consEmail'].errors.required" style="font-weight: bolder">Consumer email is required</div>
+            <div *ngIf="form.controls['consEmail'].errors.pattern" style="font-weight: bolder">Invalid consumer email</div>
+            <div *ngIf="form.controls['consEmail'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Consumer phone number</mat-label>
+        <input matInput placeholder="Enter consumer phone number..." formControlName="phoneNumber">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>
+          <div *ngIf="form.controls['phoneNumber'].errors">
+            <div *ngIf="form.controls['phoneNumber'].errors.required" style="font-weight: bolder">Consumer phone number is required</div>
+            <div *ngIf="form.controls['phoneNumber'].errors.pattern" style="font-weight: bolder">Number format: "(+380)_________"</div>
           </div>
         </mat-hint>
       </mat-form-field>
@@ -27,7 +45,7 @@
     <div *ngIf="!isConfirmed">
       <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
     </div>
-    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="onEditClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
-    <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
+    <button style="margin-top: 10px;" mat-raised-button (click)="onEditClick()"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <a id="popup-2-close" href="javascript:PopUpHide(2)" style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</a>
   </form>
 </div>

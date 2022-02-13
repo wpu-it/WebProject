@@ -20,7 +20,7 @@
 }
 
 .toolbar{
-  background-color: #5de940;
+  background-color: #47a5ef;
 }
 
 .dashboard-img{
@@ -34,9 +34,24 @@
 }
 
 footer{
-  height: 50px;
-  background-color: #5de940;
+  height: 85px;
+  background-color: #47a5ef;
   display: flex;
   justify-content: space-around;
-  padding-top: 25px;
+  padding: 15px;
+}
+
+.social{
+  margin-top: 2%;
+  display: flex;
+}
+
+.social  img{
+  margin: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.copyright{
+  margin-top: 2%;
 }

@@ -1,13 +1,11 @@
 <mat-card class="example-card">
   <mat-card-content>
-    <div style="margin-top: 10px;"><b>Consumer fullname:</b> {{order.consFullname}}</div>
+    <div style="margin-top: 10px;"><b>Consumer full name:</b> {{order.consFullname}}</div>
     <div style="margin-top: 10px;"><b>Consumer email:</b> {{order.consEmail}}</div>
+    <div style="margin-top: 10px;"><b>Consumer phone number:</b> {{order.consPhoneNumber}}</div>
   </mat-card-content>
   <div class="btns">
     <button mat-raised-button color="warn" (click)="onRemoveClick()"><mat-icon>remove</mat-icon> Remove</button>
-    <button mat-raised-button style="background-color: #fab904" (click)="onUpdateClick()"><mat-icon>update</mat-icon> Update</button>
-  </div>
-  <div class="btns" style="margin-top: 10px;">
-    <button mat-raised-button style="background-color: #fab904; width: 140px;" (click)="onMakeCompletedClick()"><mat-icon>update</mat-icon> Update photo</button>
+    <a href="javascript:PopUpShow(2)" mat-raised-button style="background-color: #fab904" (click)="onUpdateClick()"><mat-icon>update</mat-icon> Update</a>
   </div>
 </mat-card>

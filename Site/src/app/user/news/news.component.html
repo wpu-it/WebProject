@@ -1,0 +1,14 @@
+<div>
+  <h3 style="margin-left: 40%; margin-top: 20px;">News</h3>
+  <div style="display: flex; flex-direction: column; align-items: center">
+    <ng-container *ngIf="news$ | async as news">
+      <new style="margin: 5px;" *ngFor="let new of news" [news]="new"></new>
+    </ng-container>
+    <ng-container *ngIf="news$ | async as news" style="bottom: 10px;">
+      <mat-paginator *ngIf="totalResults > pageSize" style="margin-top: 20px;" (page)="onPaginatorClick($event)"
+                     [length]="totalResults"
+                     [pageSize]="pageSize"
+                     aria-label="Select page"></mat-paginator>
+    </ng-container>
+  </div>
+</div>

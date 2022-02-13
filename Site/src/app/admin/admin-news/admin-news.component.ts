@@ -18,6 +18,8 @@ export class AdminNewsComponent implements OnInit{
   rightPageIdx: number = 1;
   pageSize: number = 2;
 
+  newsId: number = 1;
+
   constructor(
     private readonly newsService: NewsService
   ) {
@@ -39,8 +41,12 @@ export class AdminNewsComponent implements OnInit{
     this.getNews();
   }
 
-  deactivate(){
+  changeEvent(){
     this.getNews();
+  }
+
+  updateEvent(id: number){
+    this.newsId = id;
   }
 
   getNews(){

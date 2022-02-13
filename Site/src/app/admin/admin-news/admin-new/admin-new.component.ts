@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {News} from "../../../user/news/news.interfaces";
 import {Router} from "@angular/router";
 import {NewsService} from "../../../user/news/news.service";
@@ -10,6 +10,7 @@ import {NewsService} from "../../../user/news/news.service";
 })
 export class AdminNewComponent{
   @Input() news: News;
+  @Output() editClick = new EventEmitter();
 
   constructor(
     private readonly newsService: NewsService,
@@ -22,10 +23,10 @@ export class AdminNewComponent{
   }
 
   onUpdateClick(){
-    this.router.navigate(['admin/news/edit/' + this.news.id]);
+    this.editClick.emit(this.news.id);
   }
 
   onUpdatePhotoClick(){
-    this.router.navigate(['admin/news/edit/photo/' + this.news.id]);
+    this.editClick.emit(this.news.id);
   }
 }

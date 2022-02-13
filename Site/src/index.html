@@ -12,5 +12,20 @@
 </head>
 <body class="mat-typography">
   <app-root></app-root>
+  <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      PopUpHide();
+    });
+
+    function PopUpShow(number){
+      $("#popup"+number).show();
+    }
+
+    function PopUpHide(number){
+      $("#popup"+number).hide();
+    }
+
+  </script>
 </body>
 </html>

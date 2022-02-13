@@ -5,20 +5,22 @@
         <mat-label>Email</mat-label>
         <input matInput placeholder="Enter new email..." formControlName="email">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['email'].errors">
-            <div *ngIf="form.controls['email'].errors.required" class="mat-error">Email is required</div>
+            <div *ngIf="form.controls['email'].errors.required" style="font-weight: bolder">Email is required</div>
+            <div *ngIf="form.controls['email'].errors.pattern" style="font-weight: bolder">Invalid email</div>
+            <div *ngIf="form.controls['email'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
           </div>
           <div *ngIf="form.controls['email'].value === prevEmail">
-            <div class="mat-error">Email wasn't changed</div>
+            <div style="font-weight: bolder">Email wasn't changed</div>
           </div>
         </mat-hint>
       </mat-form-field>
     </p>
     <div *ngIf="!isConfirmed">
-      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+      <div *ngFor="let err of errors" style="font-weight: bold">{{err}}</div>
     </div>
-    <button mat-raised-button color="primary" (click)="onEditClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <button mat-raised-button (click)="onEditClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
     <button style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</button>
   </form>
 </div>

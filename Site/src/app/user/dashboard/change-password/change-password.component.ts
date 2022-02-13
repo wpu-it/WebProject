@@ -14,7 +14,7 @@ import {catchError, take} from "rxjs/operators";
 export class ChangePasswordComponent implements OnInit{
   form: FormGroup
   disabled = false;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
   isConfirmed = true;
   userId: number;
 
@@ -24,7 +24,12 @@ export class ChangePasswordComponent implements OnInit{
   ) {
     this.form = new FormGroup({
       'oldPassword': new FormControl('', Validators.required),
-      'newPassword': new FormControl('', Validators.required),
+      'newPassword': new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}'),
+        Validators.maxLength(50)
+      ]),
       'confirmNewPassword': new FormControl('', Validators.required)
     });
   }
@@ -46,7 +51,19 @@ export class ChangePasswordComponent implements OnInit{
             this.isConfirmed = false;
             this.disabled = false;
             if(!this.errors.includes(err.error)){
-              this.errors.push(err.error);
+              if(typeof err.error == "string") this.errors.push(err.error);
+              else{
+                let errors = err.error.errors;
+                if(errors.oldPassword != undefined){
+                  errors.oldPassword.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.newPassword != undefined){
+                  errors.newPassword.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.confirmNewPassword != undefined){
+                  errors.confirmNewPassword.forEach((err: string) => this.errors.push(err));
+                }
+              }
             }
             return [];
           }),

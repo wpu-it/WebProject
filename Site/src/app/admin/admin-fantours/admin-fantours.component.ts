@@ -12,6 +12,7 @@ import {Observable, of} from "rxjs";
 })
 export class AdminFantoursComponent implements OnInit{
   fantours$: Observable<Fantour[]>;
+  tourId: number = 1;
 
   totalResults: number;
   leftPageIdx: number = 0;
@@ -35,17 +36,18 @@ export class AdminFantoursComponent implements OnInit{
     this.getFantours();
   }
 
+  changeEvent(){
+    this.getFantours();
+  }
+
+  updateEvent(id: number){
+    this.tourId = id;
+  }
+
   ngOnInit(): void {
     this.getFantours();
   }
 
-  onDeactivateAdmin(){
-    this.getFantours();
-  }
-
-  activate(){
-    console.log('tours activate');
-  }
 
   getFantours(){
     this.fantoursService.fantours$.subscribe(tours => {

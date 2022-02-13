@@ -1,18 +1,34 @@
 <div>
   <h1 style="margin-left: 41%;">News editor</h1>
   <div class="btns">
-    <a routerLink="add"
-       mat-raised-button style="background-color: #6bb9e1; margin-bottom: 10px;">Add new item</a>
+    <a href="javascript:PopUpShow(1)" mat-raised-button style="margin-bottom: 10px;">Add new item</a>
   </div>
-  <router-outlet (deactivate)="deactivate()"></router-outlet>
+  <div class="b-popup" id="popup1">
+    <div class="b-popup-content">
+      <add-news (addEvent)="changeEvent()"></add-news>
+    </div>
+  </div>
+  <div class="b-popup" id="popup2">
+    <div class="b-popup-content">
+      <update-news [newsId]="newsId" (updateEvent)="changeEvent()"></update-news>
+    </div>
+  </div>
+  <div class="b-popup" id="popup3">
+    <div class="b-popup-content">
+      <update-news-photo [newsId]="newsId" (updateEvent)="changeEvent()"></update-news-photo>
+    </div>
+  </div>
   <ng-container *ngIf="this.news$ | async as news">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 35px;" *ngIf="news.length != 0">
-      <admin-new *ngFor="let new of news" [news]="new"></admin-new>
+    <div *ngIf="news.length > 0">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 35px;">
+        <admin-new  style="width: 47%;" (editClick)="updateEvent($event)" *ngFor="let new of news" [news]="new"></admin-new>
+      </div>
+      <mat-paginator *ngIf="totalResults > pageSize" style="margin-top: 20px;" (page)="onPaginatorClick($event)"
+                     [length]="totalResults"
+                     [pageSize]="pageSize"
+                     aria-label="Select page"></mat-paginator>
     </div>
     <h1 style="margin-left: 20px; margin-top: 20px;" *ngIf="news.length == 0">There is no news yet...</h1>
   </ng-container>
-  <mat-paginator style="margin-top: 20px;" (page)="onPaginatorClick($event)"
-                 [length]="totalResults"
-                 [pageSize]="pageSize"
-                 aria-label="Select page"></mat-paginator>
+
 </div>

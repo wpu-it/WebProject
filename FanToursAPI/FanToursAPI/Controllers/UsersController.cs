@@ -8,6 +8,7 @@ using FanToursAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,12 +23,15 @@ namespace FanToursAPI.Controllers
         UserPicturesService userPicturesService;
         MD5Service mD5Service;
         OrdersService ordersService;
-        public UsersController(UsersService usersService, UserPicturesService userPicturesService, MD5Service mD5Service, OrdersService ordersService)
+        SQLProtectService sQLProtectService;
+        public UsersController(UsersService usersService, UserPicturesService userPicturesService, MD5Service mD5Service, OrdersService ordersService,
+            SQLProtectService sQLProtectService)
         {
             this.usersService = usersService;
             this.userPicturesService = userPicturesService;
             this.mD5Service = mD5Service;
             this.ordersService = ordersService;
+            this.sQLProtectService = sQLProtectService;
         }
 
         [HttpGet]
@@ -50,6 +54,15 @@ namespace FanToursAPI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateUser(UserModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.Fullname)) return BadRequest("Invalid full name");
+            if (!sQLProtectService.isValid(model.Email)) return BadRequest("Invalid email");
+            if (!sQLProtectService.isValid(model.Password)) return BadRequest("Invalid password");
             var user = await usersService.Get(model.Id);
             if (user is null) return BadRequest("User not found.");
             if (await usersService.IsEmailExists(model.Email, model.Id)) return BadRequest("Same email already exists.");
@@ -84,6 +97,12 @@ namespace FanToursAPI.Controllers
         [Route("update/photo")]
         public async Task<ActionResult> UpdateUserPhoto(UpdateUserPhotoModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
             var user = await usersService.Get(model.UserId);
             if (user is null) return BadRequest("User not found.");
             var words = model.NewPhoto.Split(',');
@@ -101,6 +120,13 @@ namespace FanToursAPI.Controllers
         [Route("update/password")]
         public async Task<ActionResult> ChangeUserPassword(ChangePasswordModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.NewPassword)) return BadRequest("Invalid new password");
             var user = await usersService.Get(model.UserId);
             if (user is null) return BadRequest("User not found.");
             if (user.Password != mD5Service.Hash(model.OldPassword)) return BadRequest("Old password is not correct");

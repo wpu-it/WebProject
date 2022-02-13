@@ -8,9 +8,12 @@
         <mat-label>Fullname</mat-label>
         <input matInput placeholder="Enter your fullname..." formControlName="fullname">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['fullname'].errors">
-            <div *ngIf="form.controls['fullname'].errors.required" class="mat-error">Fullname is required</div>
+            <div *ngIf="form.controls['fullname'].errors.required" style="font-weight: bolder">Fullname is required</div>
+            <div *ngIf="form.controls['fullname'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
+            <div *ngIf="form.controls['fullname'].errors.pattern" style="font-weight: bolder">Fullname must be written only with latin
+              letters and spaces</div>
           </div>
         </mat-hint>
 
@@ -21,9 +24,11 @@
         <mat-label>Email</mat-label>
         <input matInput placeholder="Enter your email..." formControlName="email">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['email'].errors">
-            <div *ngIf="form.controls['email'].errors.required" class="mat-error">Email is required</div>
+            <div *ngIf="form.controls['email'].errors.required" style="font-weight: bolder">Email is required</div>
+            <div *ngIf="form.controls['email'].errors.pattern" style="font-weight: bolder">Invalid email</div>
+            <div *ngIf="form.controls['email'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
           </div>
         </mat-hint>
       </mat-form-field>
@@ -33,21 +38,25 @@
         <mat-label>Password</mat-label>
         <input type="password" matInput placeholder="Enter your password..." formControlName="password">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['password'].errors">
-            <div *ngIf="form.controls['password'].errors.required" class="mat-error">Password is required</div>
+            <div *ngIf="form.controls['password'].errors.required" style="font-weight: bolder">Password is required</div>
+            <div *ngIf="form.controls['password'].errors.minlength" style="font-weight: bolder">Min length - 8 symbols</div>
+            <div *ngIf="form.controls['password'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
+            <div *ngIf="form.controls['password'].errors.pattern" style="font-weight: bolder">Password must contain at least: 1
+            upper case letter, 1 lower case letter, 1 digit and 1 special symbol (| is not allowed)</div>
           </div>
         </mat-hint>
       </mat-form-field>
     </p>
     <p>
-      <mat-form-field appearance="legacy">
+      <mat-form-field  style="margin-top: 15px;" appearance="legacy">
         <mat-label>Confirm Password</mat-label>
         <input type="password" matInput placeholder="Enter your confirmation password..." formControlName="confirmPassword">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint >
           <div *ngIf="form.controls['password'].value !== form.controls['confirmPassword'].value">
-            <div class="mat-error">Passwords are not comparing</div>
+            <div style="font-weight: bolder">Passwords are not comparing</div>
           </div>
         </mat-hint>
       </mat-form-field>
@@ -57,14 +66,14 @@
           <mat-label>Photo</mat-label>
           <input type="file" accept=".jpg" (change)="onPhotoChange($event)">
         </div>
-        <mat-hint style="font-weight: bold">
+        <mat-hint >
           <div *ngIf="form.controls['photo'].errors">
-            <div *ngIf="form.controls['photo'].errors.required" class="mat-error">Photo is required</div>
+            <div *ngIf="form.controls['photo'].errors.required" style="font-weight: bolder">Photo is required</div>
           </div>
         </mat-hint>
     <div *ngIf="!isRegistered">
-      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+      <div *ngFor="let err of errors" style="font-weight: bold" >{{err}}</div>
     </div>
-    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="onRegisterClick()" [disabled]="disabled">Sign up</button>
+    <button style="margin-top: 10px;" mat-raised-button (click)="onRegisterClick()" [disabled]="disabled">Sign up</button>
   </form>
 </div>

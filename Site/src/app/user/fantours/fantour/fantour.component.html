@@ -1,24 +1,19 @@
 <mat-card class="example-card">
   <mat-card-title-group>
-    <mat-card-title>{{fantour.title}}</mat-card-title>
-
-    <img mat-card-sm-image src="{{fantour.photo}}" >
+    <mat-card-title>{{fantour.title.slice(0, 20)}}...</mat-card-title>
   </mat-card-title-group>
   <mat-card-content>
-    <div class="bold-underline">Description:</div>
-    {{fantour.description}}
+    <img mat-card-sm-image style="width: 75%; height: 120px;" src="{{fantour.photo}}" >
+    <div class="bold">Description:</div>
+    <div>{{fantour.description.slice(0, 20)}}...</div>
+    <div class="bold">Schedule:</div>
+    <div>{{fantour.schedule.slice(0, 20)}}...</div>
+    <div><b>Price without ticket:</b> {{fantour.priceWithoutTicket}} $</div>
+    <div><b>Price with ticket:</b> {{fantour.priceWithoutTicket + fantour.ticketPrice}} $</div>
+    <div><b>Count of places:</b> {{fantour.quantity}}</div>
   </mat-card-content>
-  <mat-card-content>
-    <div class="bold-underline">Schedule:</div>
-    {{fantour.schedule}}
-  </mat-card-content>
-  <mat-card-content>
-    <div>Price without ticket: {{fantour.priceWithoutTicket}} $</div>
-  </mat-card-content>
-  <mat-card-content>
-    <div>Price with ticket: {{fantour.priceWithoutTicket + fantour.ticketPrice}} $</div>
-  </mat-card-content>
-  <mat-card-content>
-    <div>Count of places: {{fantour.quantity}}</div>
-  </mat-card-content>
+  <div class="btns">
+    <button mat-raised-button color="primary">See more</button>
+    <button mat-raised-button>Make order</button>
+  </div>
 </mat-card>

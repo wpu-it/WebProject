@@ -3,6 +3,7 @@ using FanToursAPI.Business.Exceptions;
 using FanToursAPI.Business.Services;
 using FanToursAPI.Models.Automapper;
 using FanToursAPI.Models.Order;
+using FanToursAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,11 @@ namespace FanToursAPI.Controllers
     {
         ObjectMapperModels mapper = ObjectMapperModels.Instance;
         OrdersService ordersService;
-        public OrdersController(OrdersService ordersService)
+        SQLProtectService sQLProtectService;
+        public OrdersController(OrdersService ordersService, SQLProtectService sQLProtectService)
         {
             this.ordersService = ordersService;
+            this.sQLProtectService = sQLProtectService;
         }
 
         [HttpGet]
@@ -46,6 +49,15 @@ namespace FanToursAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrder([FromBody] CreateOrderModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.ConsFullname)) return BadRequest("Invalid consumer full name");
+            if (!sQLProtectService.isValid(model.ConsEmail)) return BadRequest("Invalid consumer email");
+            if (!sQLProtectService.isValid(model.ConsPhoneNumber)) return BadRequest("Invalid consumer phone number");
             var order = mapper.Mapper.Map<OrderDTO>(model);
             await ordersService.Create(order);
             var orders = await ordersService.GetAll();
@@ -56,6 +68,15 @@ namespace FanToursAPI.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.ConsFullname)) return BadRequest("Invalid consumer full name");
+            if (!sQLProtectService.isValid(model.ConsEmail)) return BadRequest("Invalid consumer email");
+            if (!sQLProtectService.isValid(model.ConsPhoneNumber)) return BadRequest("Invalid consumer phone number");
             var order = await ordersService.Get(model.Id);
             if (order is null) return BadRequest("Order not found");
             order.ConsFullname = model.ConsFullname;
@@ -76,5 +97,6 @@ namespace FanToursAPI.Controllers
             var mappedOrders = mapper.Mapper.Map<List<OrderModel>>(orders);
             return new JsonResult(mappedOrders);
         }
+
     }
 }

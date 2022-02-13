@@ -18,6 +18,7 @@ import {QueryHttpInterceptor} from "./shared/http/query-http.interceptor";
 import {CheckAdminGuard} from "./shared/guards/check-admin.guard";
 import {NewsModule} from "./user/news/news.module";
 import {OrdersModule} from "./user/orders/orders.module";
+import {UserModule} from "./user/user.module";
 
 @NgModule({
   declarations: [
@@ -29,13 +30,10 @@ import {OrdersModule} from "./user/orders/orders.module";
     BrowserModule,
     BrowserAnimationsModule,
     MatSliderModule,
-    FantoursModule,
     SharedModule,
     AuthModule,
     AdminModule,
-    DashboardModule,
-    NewsModule,
-    OrdersModule
+    UserModule
   ],
   providers: [
     BrowserLocalStorage,

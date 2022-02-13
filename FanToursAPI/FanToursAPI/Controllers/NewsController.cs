@@ -2,9 +2,11 @@
 using FanToursAPI.Business.Services;
 using FanToursAPI.Models.Automapper;
 using FanToursAPI.Models.News;
+using FanToursAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,10 +19,12 @@ namespace FanToursAPI.Controllers
         ObjectMapperModels mapper = ObjectMapperModels.Instance;
         NewsService newsService;
         NewsPicturesService newsPicturesService;
-        public NewsController(NewsService newsService, NewsPicturesService newsPicturesService)
+        SQLProtectService sQLProtectService;
+        public NewsController(NewsService newsService, NewsPicturesService newsPicturesService, SQLProtectService sQLProtectService)
         {
             this.newsService = newsService;
             this.newsPicturesService = newsPicturesService;
+            this.sQLProtectService = sQLProtectService;
         }
 
         [HttpGet]
@@ -58,6 +62,14 @@ namespace FanToursAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateNews(CreateNewsModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.Title)) return BadRequest("Invalid title");
+            if (!sQLProtectService.isValid(model.Text)) return BadRequest("Invalid text");
             var news = mapper.Mapper.Map<NewsDTO>(model);
             await newsService.Create(news);
             news = await newsService.GetByTitle(model.Title);
@@ -95,6 +107,14 @@ namespace FanToursAPI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateNews(UpdateNewsModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
+            if (!sQLProtectService.isValid(model.Title)) return BadRequest("Invalid title");
+            if (!sQLProtectService.isValid(model.Text)) return BadRequest("Invalid text");
             var news = await newsService.Get(model.Id);
             if (news is null) return BadRequest("News not found");
             news.Title = model.Title;
@@ -115,6 +135,12 @@ namespace FanToursAPI.Controllers
         [Route("update/photo")]
         public async Task<ActionResult> UpdateNewsPhoto(UpdateNewsPhotoModel model)
         {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            if (!Validator.TryValidateObject(model, context, results, true))
+            {
+                return BadRequest("Validation error");
+            }
             var news = await newsService.Get(model.NewsId);
             if (news is null) return BadRequest("News not found");
             var words = model.NewPhoto.Split(',');

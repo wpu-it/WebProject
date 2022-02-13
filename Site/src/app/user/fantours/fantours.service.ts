@@ -51,12 +51,10 @@ export class FantoursService{
     return this.fantoursApiService.updateFantour(id, title, description, schedule, priceWithoutTicket,
       ticketPrice, quantity).pipe(
       map(fantours => {
-        let newFantours: Fantour[] = this.mapFantours(fantours);
-        return newFantours;
+        return this.mapFantours(fantours);
       }),
       tap((fantours: Fantour[]) => {
         this.fantours$ = of(fantours);
-        window.scroll(0, 0);
       })
     );
   }

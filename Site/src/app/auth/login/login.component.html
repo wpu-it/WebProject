@@ -8,28 +8,28 @@
         <mat-label>Email</mat-label>
         <input matInput autocomplete="off" placeholder="Enter your email..." formControlName="email">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint>
           <div *ngIf="form.controls['email'].errors">
-            <div *ngIf="form.controls['email'].errors.required" class="mat-error">Email is required</div>
+            <div *ngIf="form.controls['email'].errors.required" style="font-weight: bolder">Email is required</div>
           </div>
         </mat-hint>
       </mat-form-field>
     </p>
-    <p>
+    <p style="color: black;">
       <mat-form-field appearance="legacy">
         <mat-label>Password</mat-label>
         <input type="password" matInput placeholder="Enter your password..." formControlName="password">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint style="font-weight: bold">
+        <mat-hint >
           <div *ngIf="form.controls['password'].errors">
-            <div *ngIf="form.controls['password'].errors.required" class="mat-error">Password is required</div>
+            <div *ngIf="form.controls['password'].errors.required" style="font-weight: bolder" >Password is required</div>
           </div>
         </mat-hint>
       </mat-form-field>
     </p>
     <div *ngIf="!isLogined">
-      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+      <div *ngFor="let err of errors" style="font-weight: bold">{{err}}</div>
     </div>
-    <button mat-raised-button color="primary" (click)="onLoginClick()" [disabled]="disabled">Sign in</button>
+    <button mat-raised-button (click)="onLoginClick()" [disabled]="disabled">Sign in</button>
   </form>
 </div>

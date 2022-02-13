@@ -1,9 +1,9 @@
 <div class="central-container">
   <div style="min-height: 100%">
     <div class="btns-cont">
-      <a mat-raised-button color="primary" style="margin-top: 20px; margin-left: 20px;"
+      <a mat-raised-button  style="margin-top: 20px; margin-left: 20px;"
         (click)="goToPrevPage()"><mat-icon>reply</mat-icon> Go back</a>
-      <a mat-raised-button color="primary" style="margin-top: 20px; margin-right: 20px;"
+      <a mat-raised-button style="margin-top: 20px; margin-right: 20px;"
         (click)="goToMainPageClick()"><mat-icon>home</mat-icon> Go to main page</a>
     </div>
     <div style="margin-top: 20px;" *ngIf="usersService.user$ | async as user">
@@ -17,21 +17,24 @@
           </div>
         </div>
         <div class="btns">
-          <a mat-raised-button style="background-color: #6bb9e1" routerLink="edit/fullname">Change fullname</a>
-          <a mat-raised-button style="background-color: #6bb9e1" routerLink="edit/email">Change email</a>
-          <a mat-raised-button style="background-color: #6bb9e1" routerLink="edit/password">Change password</a>
-          <a mat-raised-button style="background-color: #6bb9e1" routerLink="edit/photo">Change photo</a>
-          <a mat-raised-button style="background-color: #6bb9e1" routerLink="orders/{{userId}}">Show orders</a>
+          <a mat-raised-button routerLink="edit/fullname">Change fullname</a>
+          <a mat-raised-button routerLink="edit/email">Change email</a>
+          <a mat-raised-button routerLink="edit/password">Change password</a>
+          <a mat-raised-button routerLink="edit/photo">Change photo</a>
+          <a mat-raised-button routerLink="orders/{{userId}}">Show orders</a>
         </div>
         <router-outlet></router-outlet>
       </div>
 
-      <div style=" display: flex; justify-content: space-evenly;"  *ngIf="user.isAdmin">
-        <div class="admn-img"><mat-icon>account_circle</mat-icon></div>
-        <div class="info">
-          <div><mat-icon>email</mat-icon> Email: {{user.email}}</div>
-          <div><mat-icon>notification_important</mat-icon> You are admin!!!</div>
+      <div  *ngIf="user.isAdmin">
+        <div style=" display: flex; justify-content: space-evenly;">
+          <div class="admn-img"><mat-icon>account_circle</mat-icon></div>
+          <div class="info">
+            <div><mat-icon>email</mat-icon> Email: {{user.email}}</div>
+            <div><mat-icon>notification_important</mat-icon> You are admin!!!</div>
+          </div>
         </div>
+        <img style=" margin-left: 25%; margin-top: 20%; opacity: 1; width: 400px; height: 300px;" src="{{adminPhoto}}" alt="">
       </div>
     </div>
   </div>

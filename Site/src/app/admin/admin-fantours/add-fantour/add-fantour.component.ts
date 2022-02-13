@@ -1,9 +1,9 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FantoursService} from "../../../user/fantours/fantours.service";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
-import {catchError, take} from "rxjs/operators";
+import {catchError, min, take} from "rxjs/operators";
 
 @Component({
   selector: 'add-fantour',
@@ -12,22 +12,43 @@ import {catchError, take} from "rxjs/operators";
 })
 export class AddFantourComponent{
   form: FormGroup;
-  disabled = false;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
   isConfirmed = true;
+  @Output() addEvent = new EventEmitter();
 
   constructor(
     private readonly fantoursService: FantoursService,
     private readonly router: Router
   ) {
     this.form = new FormGroup({
-      'title': new FormControl('', Validators.required),
-      'description': new FormControl('', Validators.required),
-      'schedule': new FormControl('', Validators.required),
-      'priceWithoutTicket': new FormControl('', Validators.required),
-      'ticketPrice': new FormControl('', Validators.required),
+      'title': new FormControl('', [
+        Validators.required,
+        Validators.pattern('(?=.*[A-Za-z])^[A-Za-z]+[^\\>]*'),
+        Validators.maxLength(100)
+      ]),
+      'description': new FormControl('', [
+        Validators.required,
+        Validators.pattern('(?=.*[A-Za-z])^[A-Za-z]+[^\\>]*'),
+        Validators.maxLength(500)
+      ]),
+      'schedule': new FormControl('', [
+        Validators.required,
+        Validators.pattern('(?=.*[A-Za-z])^[A-Za-z]+[^\\>]*'),
+        Validators.maxLength(500)
+      ]),
+      'priceWithoutTicket': new FormControl('', [
+        Validators.required,
+        Validators.pattern('^\\d+[.]+\\d+$')
+      ]),
+      'ticketPrice': new FormControl('', [
+        Validators.required,
+        Validators.pattern('^\\d+[.]+\\d+$')
+      ]),
       'photo': new FormControl(null, Validators.required),
-      'quantity': new FormControl('', Validators.required)
+      'quantity': new FormControl('', [
+        Validators.required,
+        Validators.min(1)
+      ])
     });
     window.scroll(0, 0);
   }
@@ -36,26 +57,75 @@ export class AddFantourComponent{
     if(this.form.valid){
       const { title, description, schedule, priceWithoutTicket, ticketPrice, photo, quantity} = this.form.value;
       this.errors = [];
-      this.disabled = true;
-      this.fantoursService.addFantour(title, description, schedule, priceWithoutTicket, ticketPrice, photo, quantity).pipe(
-        catchError((err: HttpErrorResponse) => {
+      if(typeof priceWithoutTicket == 'string'){
+        if(!priceWithoutTicket.match('^\\d+[.]+\\d+$')){
           this.isConfirmed = false;
-          this.disabled = false;
-          if(!this.errors.includes(err.error)){
-            this.errors.push(err.error);
-          }
-          return [];
-        }),
-        take(1)
-      ).subscribe(res => {
-        this.router.navigate(['admin/fantours']);
-      });
+          this.errors.push('Price without ticket must be in format digits.digits');
+        }
+      }
+      if(typeof ticketPrice == 'string'){
+        if(!ticketPrice.match('^\\d+[.]+\\d+$')){
+          this.isConfirmed = false;
+          this.errors.push('Ticket price must be in format digits.digits');
+        }
+      }
+      if(isNaN(parseInt(quantity))){
+        this.isConfirmed = false;
+        this.errors.push('Quantity is required');
+      }
+      if(this.errors.length == 0){
+        this.fantoursService.addFantour(title, description, schedule, priceWithoutTicket, ticketPrice, photo, quantity).pipe(
+          catchError((err: HttpErrorResponse) => {
+            this.isConfirmed = false;
+            if(!this.errors.includes(err.error)){
+              if(typeof err.error == "string") this.errors.push(err.error);
+              else{
+                let errors = err.error.errors;
+                if(errors.title != undefined){
+                  errors.title.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.description != undefined){
+                  errors.description.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.schedule != undefined){
+                  errors.schedule.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.priceWithoutTicket != undefined){
+                  errors.priceWithoutTicket.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.ticketPrice != undefined){
+                  errors.ticketPrice.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.photo != undefined){
+                  errors.photo.forEach((err: string) => this.errors.push(err));
+                }
+                if(errors.quantity != undefined){
+                  errors.quantity.forEach((err: string) => this.errors.push(err));
+                }
+              }
+            }
+            return [];
+          }),
+          take(1)
+        ).subscribe(res => {
+          let ref = document.getElementById('popup-close');
+          ref = ref ? ref : new HTMLElement();
+          ref.click();
+          this.addEvent.emit();
+        });
+      }
     }
   }
 
   onCloseClick(){
-    this.router.navigate(['admin/fantours']);
-    window.scroll(0, 0);
+    this.form.patchValue({
+      title: '',
+      description: '',
+      schedule: '',
+      priceWithoutTicket: '',
+      ticketPrice: '',
+      quantity: 1
+    })
   }
 
   onPhotoChange(event: any){

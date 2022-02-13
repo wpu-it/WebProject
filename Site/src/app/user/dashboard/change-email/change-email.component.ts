@@ -12,7 +12,7 @@ import {HttpErrorResponse} from "@angular/common/http";
   styleUrls: ['change-email.component.scss']
 })
 export class ChangeEmailComponent implements OnInit{
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
   isConfirmed = true;
   form: FormGroup;
   user: User;
@@ -23,7 +23,11 @@ export class ChangeEmailComponent implements OnInit{
     private readonly router: Router
   ) {
     this.form = new FormGroup({
-      'email': new FormControl('', Validators.required)
+      'email': new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[\\w.]+[@][A-Za-z]+[.]+[A-Za-z.]+$'),
+        Validators.maxLength(50)
+      ])
     });
   }
 
@@ -57,7 +61,13 @@ export class ChangeEmailComponent implements OnInit{
             this.isConfirmed = false;
             this.disabled = false;
             if(!this.errors.includes(err.error)){
-              this.errors.push(err.error);
+              if(typeof err.error == "string") this.errors.push(err.error);
+              else{
+                let errors = err.error.errors;
+                if(errors.email != undefined){
+                  errors.email.forEach((err: string) => this.errors.push(err));
+                }
+              }
             }
             return [];
           }),

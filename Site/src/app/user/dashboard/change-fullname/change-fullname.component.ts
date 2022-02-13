@@ -18,21 +18,33 @@ export class ChangeFullnameComponent implements OnInit{
   disabled = false;
   prevFullname = '';
   isConfirmed = true;
-  errors: HttpErrorResponse[] = [];
+  errors: string[] = [];
 
   constructor(
     private readonly usersService: UsersService,
     private readonly router: Router
   ) {
     this.form = new FormGroup({
-      'fullname': new FormControl('', Validators.required)
+      'fullname': new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[A-Z,a-z, ]+$'),
+        Validators.maxLength(50)
+      ])
     });
   }
 
   ngOnInit(): void {
     this.usersService.user$.subscribe(us => {
       this.prevFullname = us.fullname;
-      this.user = us;
+      this.user = {
+        id: us.id,
+        fullname: us.fullname,
+        email: us.email,
+        password: us.password,
+        discount: us.discount,
+        isAdmin: us.isAdmin,
+        photo: us.photo
+      };
       this.form.patchValue({
         fullname: us.fullname
       });
@@ -51,7 +63,13 @@ export class ChangeFullnameComponent implements OnInit{
             this.isConfirmed = false;
             this.disabled = false;
             if(!this.errors.includes(err.error)){
-              this.errors.push(err.error);
+              if(typeof err.error == "string") this.errors.push(err.error);
+              else{
+                let errors = err.error.errors;
+                if(errors.fullname != undefined){
+                  errors.fullname.forEach((err: string) => this.errors.push(err));
+                }
+              }
             }
             return [];
           }),
