@@ -1,13 +1,13 @@
 <div class="containers">
   <div *ngIf="router.url == '/'" class="left-container">
-    <div   style="min-height: 100%">
-      <sorting></sorting>
+    <div style="min-height: 100%">
+      <sorting (resetEvent)="resetEvent()" (changeName)="changeNameEvent($event)" (changeBorders)="changeBordersEvent($event)"></sorting>
     </div>
   </div>
   <div class="left-container-hidden" *ngIf="router.url != '/'"></div>
   <div class="central-container">
     <div style="min-height: 100%; margin-top: 20px;">
-      <fantours *ngIf="router.url == '/'" ></fantours>
+      <fantours [isReset]="isReset" [search]="search" [values]="values" *ngIf="router.url == '/'"></fantours>
       <router-outlet></router-outlet>
     </div>
   </div>

@@ -1,0 +1,14 @@
+<mat-card class="example-card" style="width: 75%">
+  <mat-card-title-group>
+    <mat-card-title>{{fantour.title}}</mat-card-title>
+  </mat-card-title-group>
+  <mat-card-content>
+    <img mat-card-sm-image style="width: 50%; height: 150px; margin-left: 25%;" src="{{fantour.photo}}" >
+    <div class="bold">Description:</div>
+    <div>{{fantour.description}}</div>
+    <div class="bold">Schedule:</div>
+    <div>{{fantour.schedule}}</div>
+    <div><b>Price with ticket:</b> {{fantour.priceWithoutTicket + fantour.ticketPrice}} $</div>
+    <div><b>Count of places:</b> {{fantour.quantity}}</div>
+  </mat-card-content>
+</mat-card>

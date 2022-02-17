@@ -55,14 +55,13 @@ export class OrdersApiService{
     );
   }
 
-  updateOrder(id: number, consFullname: string, consEmail: string, consPhoneNumber: string){
+  updateOrder(id: number, consFullname: string, consPhoneNumber: string){
     return this.httpClient.put<ApiOrder[]>([
       this.env.fantoursAPI,
       'orders'
     ].join('/'),{
       id: id,
       consFullname: consFullname,
-      consEmail: consEmail,
       consPhoneNumber: consPhoneNumber
     }).pipe(
       publishReplay(1),

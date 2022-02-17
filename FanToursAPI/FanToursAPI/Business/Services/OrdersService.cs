@@ -33,6 +33,31 @@ namespace FanToursAPI.Business.Services
             return mapper.Mapper.Map<List<OrderDTO>>(await uow.OrdersRepository.GetAll());
         }
 
+        public async Task<List<OrderDTO>> GetAllByTourId(int tourId)
+        {
+            var res = new List<OrderDTO>();
+            var orders = await GetAll();
+            foreach (var order in orders)
+            {
+                if (order.FanTourId == tourId) res.Add(order);
+            }
+            return res;
+        }
+
+        public async Task UpdateConsEmail(string oldEmail, string newEmail)
+        {
+            var res = new List<OrderDTO>();
+            var orders = await GetAll();
+            foreach (var order in orders)
+            {
+                if(order.ConsEmail == oldEmail)
+                {
+                    order.ConsEmail = newEmail;
+                    await Update(order);
+                }
+            }
+        }
+
         public async Task Remove(int id)
         {
             await uow.OrdersRepository.Remove(id);

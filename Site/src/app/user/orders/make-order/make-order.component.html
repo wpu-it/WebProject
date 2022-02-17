@@ -1,0 +1,65 @@
+<div class="btns-cont">
+  <a mat-raised-button style="margin-top: 5px; margin-left: 20px;"
+     (click)="goToPrevPage()"><mat-icon>reply</mat-icon> Go back</a>
+  <a mat-raised-button style="margin-top: 5px; margin-right: 20px;"
+     (click)="goToMainPageClick()"><mat-icon>home</mat-icon> Go to main page</a>
+</div>
+<div style="margin-top: 20px; margin-left: 20px;" *ngIf="fantour$ | async as fantour">
+  <form class="form" [formGroup]="form" *ngIf="errors.length==0">
+    <h2 style="margin-left: 38%; margin-top: 10px;">Confirm new order</h2>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Consumer full name</mat-label>
+        <input matInput placeholder="Enter consumer full name..." formControlName="consFullname">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>
+          <div *ngIf="form.controls['consFullname'].errors">
+            <div *ngIf="form.controls['consFullname'].errors.required" style="font-weight: bolder">Consumer fullname is required</div>
+            <div *ngIf="form.controls['consFullname'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
+            <div *ngIf="form.controls['consFullname'].errors.pattern" style="font-weight: bolder">Consumer fullname must be written only with latin
+              letters and spaces</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Consumer email</mat-label>
+        <input matInput placeholder="Enter consumer email..." formControlName="consEmail">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>
+          <div *ngIf="form.controls['consEmail'].errors">
+            <div *ngIf="form.controls['consEmail'].errors.required" style="font-weight: bolder">Consumer email is required</div>
+            <div *ngIf="form.controls['consEmail'].errors.pattern" style="font-weight: bolder">Invalid consumer email</div>
+            <div *ngIf="form.controls['consEmail'].errors.maxlength" style="font-weight: bolder">Max length - 50 symbols</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Consumer phone number</mat-label>
+        <input matInput placeholder="Enter consumer phone number..." formControlName="consPhoneNumber">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>
+          <div *ngIf="form.controls['consPhoneNumber'].errors">
+            <div *ngIf="form.controls['consPhoneNumber'].errors.required" style="font-weight: bolder">Consumer phone number is required</div>
+            <div *ngIf="form.controls['consPhoneNumber'].errors.pattern" style="font-weight: bolder">Number format: "(+380)_________"</div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <order-fantour [fantour]="fantour" *ngIf="fantour.quantity >= 1"></order-fantour>
+    </p>
+    <div *ngIf="!isConfirmed">
+      <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
+    </div>
+    <button style="margin-top: 10px; background-color: #37ff37"
+            mat-raised-button (click)="onConfirmClick()"><mat-icon>done_outline</mat-icon> Confirm</button>
+  </form>
+</div>
+<div *ngIf="errors.length != 0">
+  <h1 style="margin-top: 20px; font-weight: bold; margin-left: 35%;">Fan tour wasn't found</h1>
+  <img style="width: 70%; margin-left: 15%; margin-top: 50px; height: 400px;" src="{{errorUrl}}">
+</div>

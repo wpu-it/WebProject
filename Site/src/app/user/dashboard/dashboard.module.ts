@@ -8,11 +8,15 @@ import {ChangeEmailComponent} from "./change-email/change-email.component";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
 import {ChangePhotoComponent} from "./change-photo/change-photo.component";
 import {UserOrdersComponent} from "./user-orders/user-orders.component";
+import {UserOrderComponent} from "./user-orders/user-order/user-order.component";
+import {UpdateUserOrderComponent} from "./user-orders/update-user-order/update-user-order.component";
+import {OrdersModule} from "../orders/orders.module";
 
 @NgModule({
   imports: [
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    OrdersModule
   ],
   exports: [],
   declarations: [
@@ -21,7 +25,9 @@ import {UserOrdersComponent} from "./user-orders/user-orders.component";
     ChangeEmailComponent,
     ChangePasswordComponent,
     ChangePhotoComponent,
-    UserOrdersComponent
+    UserOrdersComponent,
+    UserOrderComponent,
+    UpdateUserOrderComponent
   ],
   providers: [
     UsersService

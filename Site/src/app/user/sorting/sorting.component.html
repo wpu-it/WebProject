@@ -1,7 +1,31 @@
-
 <div style="margin: 50% 10px;">
+  <h3 style="margin-left: 8px;">Sort fan tours</h3>
   <form [formGroup]="form" style="margin-top: 10px;">
-    <input style="width: 80%; height: 25px;"  placeholder="Search for a fan tour" formControlName="search">
-    <button (click)="onSearchClick()" style="height: 25px; margin-top: 5px;">Find</button>
+    <p style="display: flex; justify-content: space-evenly">
+      <input style="width: 65%; height: 25px; border-radius: 10px;"  placeholder="Search for a fan tour" formControlName="search">
+      <button (click)="changeNameEvent()" style="border-radius: 5px;">Find</button>
+    </p>
+    <mat-hint>
+      <div *ngIf="form.controls['search'].errors">
+        <div class="mat-error" style="font-weight: bold" *ngIf="form.controls['search'].errors.maxlength">Max length is 100 symbols</div>
+      </div>
+    </mat-hint>
   </form>
+    <div class="line"></div>
+  <form [formGroup]="numbersForm" style="margin-top: 10px;">
+    <p>
+    <div style="margin-left: 8px; margin-bottom: 10px;">Price: </div>
+    <div style="display: flex; justify-content: space-evenly">
+      <input style="width: 40%; height: 20px; border-radius: 10px;" type="number" placeholder="Min" formControlName="min">
+      <input style="width: 40%; height: 20px; border-radius: 10px;" type="number" placeholder="Max" formControlName="max">
+    </div>
+    <mat-hint>
+      <div *ngIf="numbersErrors.length != 0">
+        <div class="mat-error" style="font-weight: bold" *ngFor="let err of numbersErrors">{{err}}</div>
+      </div>
+    </mat-hint>
+    <button (click)="changeBordersEvent()" style="margin-left: 8px; margin-top: 10px; border-radius: 5px; padding: 5px;">Submit</button>
+    <button (click)="resetClick()" style="margin-left: 8px; margin-top: 10px; border-radius: 5px; padding: 5px;" *ngIf="localStorage.getItem('search') || localStorage.getItem('price')">Reset</button>
+  </form>
+
 </div>

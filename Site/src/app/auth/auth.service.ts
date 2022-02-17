@@ -6,7 +6,6 @@ import {map, tap} from "rxjs/operators";
 import {JwtResponse} from "../api/auth/auth-api.interfaces";
 import {Observable, of} from "rxjs";
 import {UsersService} from "../user/dashboard/users.service";
-import {waitForAsync} from "@angular/core/testing";
 
 @Injectable()
 export class AuthService{
@@ -17,11 +16,15 @@ export class AuthService{
     private readonly router: Router,
     private readonly usersService: UsersService
   ) {
+    this.getRole();
+  }
+
+  getRole(){
     if(this.role == ''){
       if(this.isAuthenticated()){
         let token = localStorage.getItem('accessToken');
-        usersService.getUserByAccessToken(token ? token : '');
-        usersService.user$.subscribe(u => {
+        this.usersService.getUserByAccessToken(token ? token : '');
+        this.usersService.user$.subscribe(u => {
           this.role = u.isAdmin ? 'admin' : 'user';
           if(this.role == 'admin') this.router.navigate(['admin']);
         });

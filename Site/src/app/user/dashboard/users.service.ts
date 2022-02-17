@@ -5,13 +5,15 @@ import {map, tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Router} from "@angular/router";
 import {Order} from "../orders/orders.interfaces";
+import {BrowserLocalStorage} from "../../shared/storage/local-storage";
 
 @Injectable()
 export class UsersService{
   user$: Observable<User>;
   constructor(
     private readonly usersApiService: UsersApiService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly localStorage: BrowserLocalStorage
   ) {
   }
 
@@ -40,7 +42,16 @@ export class UsersService{
       map(us => us),
       tap((us: User) => {
         this.user$ = of(us);
-        this.router.navigate(['dashboard']);
+      })
+    );
+  }
+
+  updateEmail(user: User){
+    return this.usersApiService.updateUserEmail(user).pipe(
+      map(jwtResp => jwtResp.accessToken),
+      tap(token => {
+        this.localStorage.setItem('accessToken', token);
+        this.getUserByAccessToken(token);
       })
     );
   }
@@ -50,7 +61,6 @@ export class UsersService{
       map(us => us),
       tap((us: User) => {
         this.user$ = of(us);
-        this.router.navigate(['dashboard']);
       })
     );
   }
@@ -60,7 +70,6 @@ export class UsersService{
       map(us => us),
       tap((us: User) => {
         this.user$ = of(us);
-        this.router.navigate(['dashboard']);
       })
     );
   }

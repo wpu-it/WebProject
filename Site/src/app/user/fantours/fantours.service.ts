@@ -12,8 +12,7 @@ export class FantoursService{
   fantours$: Observable<Fantour[]>;
 
   constructor(
-    private readonly fantoursApiService: FantoursApiService,
-    private readonly router: Router
+    private readonly fantoursApiService: FantoursApiService
   ) {
     this.fantours$ = this.fantoursApiService.getAllFantours().pipe(
       map(fantours => {

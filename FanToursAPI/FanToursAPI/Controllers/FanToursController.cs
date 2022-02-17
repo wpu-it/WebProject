@@ -21,13 +21,15 @@ namespace FanToursAPI.Controllers
         FanToursPicturesService fanToursPicturesService;
         OrdersService ordersService;
         SQLProtectService sQLProtectService;
+        UsersService usersService;
         public FanToursController(FanToursService fanToursService, FanToursPicturesService fanToursPicturesService,
-            OrdersService ordersService, SQLProtectService sQLProtectService)
+            OrdersService ordersService, SQLProtectService sQLProtectService, UsersService usersService)
         {
             this.fanToursService = fanToursService;
             this.fanToursPicturesService = fanToursPicturesService;
             this.ordersService = ordersService;
             this.sQLProtectService = sQLProtectService;
+            this.usersService = usersService;
         }
 
         [HttpGet]
@@ -153,9 +155,19 @@ namespace FanToursAPI.Controllers
         public async Task<ActionResult> RemoveFanTour(int id)
         {
             if (await fanToursService.Get(id) == null) return BadRequest("Tour not found");
-            await fanToursService.Remove(id);
             await fanToursPicturesService.RemoveByFantourId(id);
+            var orders = await ordersService.GetAllByTourId(id);
+            foreach (var order in orders)
+            {
+                var user = await usersService.GetUserByEmail(order.ConsEmail);
+                if (user != null)
+                {
+                    user.Discount -= (order.FanTour.PriceWithoutTicket + order.FanTour.TicketPrice) * 0.5m / 100;
+                    await usersService.Update(user);
+                }
+            }
             await ordersService.RemoveByFantourId(id);
+            await fanToursService.Remove(id);
             var tours = await fanToursService.GetAll();
             var mappedTours = mapper.Mapper.Map<List<FanTourModel>>(tours);
             for (int i = 0; i < tours.Count; i++)

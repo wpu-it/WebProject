@@ -11,15 +11,13 @@ import {NewsService} from "../../../user/news/news.service";
 export class AdminNewComponent{
   @Input() news: News;
   @Output() editClick = new EventEmitter();
+  @Output() removeClick = new EventEmitter();
 
-  constructor(
-    private readonly newsService: NewsService,
-    private readonly router: Router
-  ) {
+  constructor(){
   }
 
   onRemoveClick(){
-    this.router.navigate(['admin/news/remove/' + this.news.id]);
+    this.removeClick.emit(this.news.id);
   }
 
   onUpdateClick(){

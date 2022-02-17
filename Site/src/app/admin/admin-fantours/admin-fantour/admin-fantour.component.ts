@@ -11,16 +11,14 @@ import {Router} from "@angular/router";
 export class AdminFantourComponent{
   @Input() fantour: Fantour;
   @Output() editClick = new EventEmitter();
+  @Output() removeClick = new EventEmitter();
   constructor(
-    private readonly fantoursService: FantoursService,
-    private readonly router: Router
   ) {
 
   }
 
   onRemoveClick(){
-    let path = 'admin/fantours/remove/' + this.fantour.id;
-    this.router.navigate([path]);
+    this.removeClick.emit(this.fantour.id);
   }
 
   onUpdateClick(){

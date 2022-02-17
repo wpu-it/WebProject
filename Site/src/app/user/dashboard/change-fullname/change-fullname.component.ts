@@ -74,12 +74,14 @@ export class ChangeFullnameComponent implements OnInit{
             return [];
           }),
           take(1)
-        ).subscribe();
+        ).subscribe(res => {
+          this.router.navigate(['dashboard/orders/' + this.user.id]);
+        });
       }
     }
   }
 
   onCloseClick(){
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['dashboard/orders/' + this.user.id]);
   }
 }

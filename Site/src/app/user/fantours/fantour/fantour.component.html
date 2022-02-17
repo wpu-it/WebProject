@@ -3,7 +3,7 @@
     <mat-card-title>{{fantour.title.slice(0, 20)}}...</mat-card-title>
   </mat-card-title-group>
   <mat-card-content>
-    <img mat-card-sm-image style="width: 75%; height: 120px;" src="{{fantour.photo}}" >
+    <img mat-card-sm-image style="width: 75%; height: 120px; margin-left: 12%;" src="{{fantour.photo}}" >
     <div class="bold">Description:</div>
     <div>{{fantour.description.slice(0, 20)}}...</div>
     <div class="bold">Schedule:</div>
@@ -13,7 +13,7 @@
     <div><b>Count of places:</b> {{fantour.quantity}}</div>
   </mat-card-content>
   <div class="btns">
-    <button mat-raised-button color="primary">See more</button>
-    <button mat-raised-button>Make order</button>
+    <a href="fantour/{{fantour.id}}" mat-raised-button color="primary"><mat-icon>remove_red_eye</mat-icon> See more</a>
+    <button (click)="onMakeOrderClick()" mat-raised-button style="background-color: #37ff37"><mat-icon>shopping_cart</mat-icon> Make order</button>
   </div>
 </mat-card>

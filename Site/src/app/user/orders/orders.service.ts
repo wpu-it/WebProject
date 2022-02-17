@@ -11,8 +11,7 @@ export class OrdersService{
   orders$: Observable<Order[]>;
 
   constructor(
-    private readonly ordersApiService: OrdersApiService,
-    private readonly router: Router
+    private readonly ordersApiService: OrdersApiService
   ) {
     this.orders$ = this.ordersApiService.getAllOrders().pipe(
       map(order => {
@@ -37,20 +36,18 @@ export class OrdersService{
       }),
       tap(orders => {
         this.orders$ = of(orders);
-        this.router.navigate(['admin/orders']);
         window.scroll(0, 0);
       })
     );
   }
 
-  updateOrder(id: number, consFullname: string, consEmail: string, consPhoneNumber: string){
-    return this.ordersApiService.updateOrder(id, consFullname, consEmail, consPhoneNumber).pipe(
+  updateOrder(id: number, consFullname: string, consPhoneNumber: string){
+    return this.ordersApiService.updateOrder(id, consFullname, consPhoneNumber).pipe(
       map(orders => {
         return this.mapOrders(orders);
       }),
       tap(orders => {
         this.orders$ = of(orders);
-        this.router.navigate(['admin/orders']);
         window.scroll(0, 0);
       })
     );
@@ -63,7 +60,6 @@ export class OrdersService{
       }),
       tap(orders => {
         this.orders$ = of(orders);
-        this.router.navigate(['admin/orders']);
         window.scroll(0, 0);
       })
     );

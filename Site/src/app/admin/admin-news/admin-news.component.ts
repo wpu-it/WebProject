@@ -4,6 +4,7 @@ import {Observable, of} from "rxjs";
 import {Fantour} from "../../user/fantours/fantours.interfaces";
 import {News} from "../../user/news/news.interfaces";
 import {PageEvent} from "@angular/material/paginator";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'admin-news',
@@ -47,6 +48,12 @@ export class AdminNewsComponent implements OnInit{
 
   updateEvent(id: number){
     this.newsId = id;
+  }
+
+  removeEvent(id: number){
+    this.newsService.removeNews(id).subscribe(res => {
+      document.location.reload();
+    });
   }
 
   getNews(){

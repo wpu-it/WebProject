@@ -6,6 +6,7 @@ import {ApiUser} from "./users-api.interfaces";
 import {publishReplay, refCount} from "rxjs/operators";
 import {User} from "../../user/dashboard/user.interface";
 import {ApiOrder} from "../orders/orders-api.interfaces";
+import {JwtResponse} from "../auth/auth-api.interfaces";
 
 @Injectable()
 export class UsersApiService{
@@ -41,10 +42,8 @@ export class UsersApiService{
         id: user.id,
         fullname: user.fullname,
         email: user.email,
-        password: user.password,
         discount: user.discount,
-        isAdmin: user.isAdmin,
-        photo: user.photo
+        isAdmin: user.isAdmin
       }).pipe(
         publishReplay(1),
         refCount()
@@ -62,6 +61,25 @@ export class UsersApiService{
         oldPassword: oldPswd,
         newPassword: newPswd,
         userId: userId
+      }).pipe(
+      publishReplay(1),
+      refCount()
+    );
+  }
+
+  updateUserEmail(user: User){
+    return this.httpClient.put<JwtResponse>([
+      this.env.fantoursAPI,
+      'users',
+      'update',
+      'email'
+    ].join('/'),
+      {
+        id: user.id,
+        fullname: user.fullname,
+        email: user.email,
+        discount: user.discount,
+        isAdmin: user.isAdmin
       }).pipe(
       publishReplay(1),
       refCount()

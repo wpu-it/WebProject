@@ -1,0 +1,28 @@
+<div class="btns-cont">
+  <a mat-raised-button style="margin-top: 5px; margin-left: 20px;"
+     (click)="goToPrevPage()"><mat-icon>reply</mat-icon> Go back</a>
+  <a mat-raised-button style="margin-top: 5px; margin-right: 20px;"
+     (click)="goToMainPageClick()"><mat-icon>home</mat-icon> Go to main page</a>
+</div>
+<mat-card style="margin-top: 40px;" class="example-card" *ngIf="fantour$ | async as fantour">
+  <mat-card-title-group>
+    <mat-card-title>{{fantour.title}}</mat-card-title>
+  </mat-card-title-group>
+  <mat-card-content>
+    <img mat-card-sm-image style="width: 50%; height: 200px; margin-left: 25%;" src="{{fantour.photo}}" >
+    <div class="bold">Description:</div>
+    <div>{{fantour.description}}</div>
+    <div class="bold">Schedule:</div>
+    <div>{{fantour.schedule}}</div>
+    <div style="margin-top: 10px;"><b>Price without ticket:</b> {{fantour.priceWithoutTicket}} $</div>
+    <div style="margin-top: 10px;"><b>Price with ticket:</b> {{fantour.priceWithoutTicket + fantour.ticketPrice}} $</div>
+    <div style="margin-top: 10px;"><b>Count of places:</b> {{fantour.quantity}}</div>
+  </mat-card-content>
+  <div class="btns">
+    <button (click)="onMakeOrderClick()" mat-raised-button style="background-color: #37ff37">Make order</button>
+  </div>
+</mat-card>
+<div *ngIf="errors.length != 0">
+  <h1 style="margin-top: 20px; font-weight: bold; margin-left: 35%;">Fan tour wasn't found</h1>
+  <img style="width: 70%; margin-left: 15%; margin-top: 50px; height: 400px;" src="{{errorUrl}}">
+</div>

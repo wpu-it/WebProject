@@ -8,6 +8,9 @@ import {AuthService} from "../auth/auth.service";
   styleUrls: ['user-main.component.scss']
 })
 export class UserMainComponent implements OnInit{
+  search: string = '';
+  values: object = { min: 0, max: 0 };
+  isReset = false;
 
   constructor(
     private readonly authService: AuthService,
@@ -19,4 +22,16 @@ export class UserMainComponent implements OnInit{
     if(this.authService.role == 'admin') this.router.navigate(['admin/fantours']);
   }
 
+  changeNameEvent(search: string){
+    this.search = search;
+  }
+
+  changeBordersEvent(value: object){
+    this.values = value;
+  }
+
+  resetEvent(){
+    this.search = '';
+    this.isReset = !this.isReset;
+  }
 }

@@ -1,0 +1,21 @@
+<mat-card class="example-card">
+  <mat-card-content>
+    <div><b>Full name:</b> {{order.consFullname.slice(0, 20)}}...</div>
+    <div><b>Email:</b> {{order.consEmail}}</div>
+    <div><b>Phone number:</b> {{order.consPhoneNumber}}</div>
+    <div *ngIf="fantour$ | async as fantour">
+      <div><b>Fan tour:</b></div>
+      <div>{{fantour.title.slice(0, 20)}}...</div>
+      <img src="{{fantour.photo}}" style="width: 75%; height: 100px; margin-left: 13%;" alt="">
+      <div><b>Description:</b></div>
+      <div>{{fantour.description.slice(0, 20)}}...</div>
+      <div><b>Schedule:</b></div>
+      <div>{{fantour.schedule.slice(0, 20)}}...</div>
+      <div><b>Price with ticket:</b> {{fantour.priceWithoutTicket + fantour.ticketPrice}} $</div>
+    </div>
+  </mat-card-content>
+  <div class="btns">
+    <a href="javascript:PopUpShow(2)" (click)="onUpdateClick()" mat-raised-button style="background-color: #fab904;"><mat-icon>update</mat-icon> Update</a>
+    <button (click)="onRemoveClick()" mat-raised-button color="warn"><mat-icon>delete</mat-icon> Remove</button>
+  </div>
+</mat-card>

@@ -2,7 +2,6 @@ import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {FantoursService} from "../../user/fantours/fantours.service";
 import {Fantour} from "../../user/fantours/fantours.interfaces";
 import {PageEvent} from "@angular/material/paginator";
-import {tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 
 @Component({
@@ -42,6 +41,12 @@ export class AdminFantoursComponent implements OnInit{
 
   updateEvent(id: number){
     this.tourId = id;
+  }
+
+  removeEvent(id: number){
+    this.fantoursService.removeFantour(id).subscribe(res => {
+      document.location.reload();
+    });
   }
 
   ngOnInit(): void {

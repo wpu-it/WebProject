@@ -7,11 +7,14 @@ import {ServicesApiModule} from "../../api/services-api.module";
 import {AppRoutingModule} from "../../app-routing.module";
 import {FantourComponent} from "./fantour/fantour.component";
 import {SharedModule} from "../../shared.module";
+import {FantourInfoComponent} from "./fantour-info/fantour-info.component";
+import {OrdersModule} from "../orders/orders.module";
 
 @NgModule({
   declarations: [
     FantoursComponent,
-    FantourComponent
+    FantourComponent,
+    FantourInfoComponent
   ],
   imports: [
     AppRoutingModule,
@@ -19,7 +22,8 @@ import {SharedModule} from "../../shared.module";
     SharedModule
   ],
   exports: [
-    FantoursComponent
+    FantoursComponent,
+    FantourComponent
   ],
   providers: [
     FantoursService,

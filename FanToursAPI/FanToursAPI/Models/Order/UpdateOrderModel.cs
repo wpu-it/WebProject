@@ -16,11 +16,6 @@ namespace FanToursAPI.Models.Order
         [MaxLength(50, ErrorMessage = "Consumer fullname max length - 50 symbols")]
         public string ConsFullname { get; set; }
 
-        [Required(ErrorMessage = "Consumer email is required")]
-        [RegularExpression("^[\\w.]+[@][A-Za-z]+[.]+[A-Za-z.]+$", ErrorMessage = "Invalid consumer email")]
-        [MaxLength(50, ErrorMessage = "Consumer email max length - 50 symbols")]
-        public string ConsEmail { get; set; }
-
         [Required(ErrorMessage = "Consumer phone number is required")]
         [RegularExpression("^\\(\\+380\\)\\d{9}$", ErrorMessage = "Number format: \"(+380)_________\"")]
         public string ConsPhoneNumber { get; set; }

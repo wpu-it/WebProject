@@ -48,6 +48,12 @@ export class AdminOrdersComponent{
     this.orderId = id;
   }
 
+  removeEvent(id: number){
+    this.ordersService.removeOrder(id).subscribe(res => {
+      document.location.reload();
+    });
+  }
+
   getOrders(){
     this.ordersService.orders$.subscribe(orders => {
       console.log(orders);

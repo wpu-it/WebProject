@@ -68,12 +68,14 @@ export class ChangePasswordComponent implements OnInit{
             return [];
           }),
           take(1)
-        ).subscribe();
+        ).subscribe(res => {
+          this.router.navigate(['dashboard/orders/' + this.userId]);
+        });
       }
     }
   }
 
   onCloseClick(){
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['dashboard/orders/' + this.userId]);
   }
 }

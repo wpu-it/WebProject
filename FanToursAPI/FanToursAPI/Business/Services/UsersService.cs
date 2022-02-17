@@ -64,6 +64,16 @@ namespace FanToursAPI.Business.Services
             return null;
         }
 
+        public async Task<UserDTO> GetUserByEmail(string email)
+        {
+            var users = await GetAll();
+            foreach (var user in users)
+            {
+                if (user.Email == email) return user;
+            }
+            return null;
+        }
+
         public async Task<bool> IsEmailExists(string email, int userId)
         {
             var users = await GetAll();

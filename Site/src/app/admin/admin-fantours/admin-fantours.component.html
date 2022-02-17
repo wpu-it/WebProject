@@ -20,7 +20,7 @@
   </div>
   <ng-container *ngIf="this.fantours$ | async as fantours">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 35px;" *ngIf="fantours.length != 0">
-        <admin-fantour (editClick)="updateEvent($event)" style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></admin-fantour>
+        <admin-fantour (removeClick)="removeEvent($event)" (editClick)="updateEvent($event)" style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></admin-fantour>
       </div>
     <mat-paginator *ngIf="totalResults > pageSize" style="margin-top: 50px;" (page)="onPaginatorClick($event)"
                    [length]="totalResults"

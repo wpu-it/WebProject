@@ -1,13 +1,22 @@
-<div style="margin-left: 30px;">
-  <h2 style="margin-left: 40%; margin-top: 15px;"><mat-icon>card_travel</mat-icon> My orders</h2>
-  <div *ngIf="orders$ | async as orders">
+<div>
+  <h2 style="margin-left: 40%; margin-top: 10px;"><mat-icon>card_travel</mat-icon> My orders</h2>
+  <div class="b-popup" id="popup2">
+    <div class="b-popup-content">
+      <update-user-order [orderId]="orderId" (updateEvent)="changeEvent()"></update-user-order>
+    </div>
+  </div>
+  <ng-container *ngIf="orders$ | async as orders">
     <div *ngIf="orders.length == 0">
       <h2>Ooops... You don't have any orders yet</h2>
     </div>
     <div *ngIf="orders.length != 0">
-      <div *ngFor="let order of orders">
-        todo: realize
+      <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+        <user-order (removeEvent)="onRemoveClick($event)" (updateEvent)="onUpdateClick($event)" style="margin: 5px; width: 40%;" *ngFor="let order of orders" [order]="order"></user-order>
       </div>
     </div>
-  </div>
+    <mat-paginator *ngIf="totalResults > pageSize" style="margin-top: 20px;" (page)="onPaginatorClick($event)"
+                   [length]="totalResults"
+                   [pageSize]="pageSize"
+                   aria-label="Select page"></mat-paginator>
+  </ng-container>
 </div>

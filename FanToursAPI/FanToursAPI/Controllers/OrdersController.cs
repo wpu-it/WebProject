@@ -1,14 +1,11 @@
 ﻿using FanToursAPI.Business.DTO;
-using FanToursAPI.Business.Exceptions;
 using FanToursAPI.Business.Services;
 using FanToursAPI.Models.Automapper;
 using FanToursAPI.Models.Order;
 using FanToursAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FanToursAPI.Controllers
@@ -20,10 +17,15 @@ namespace FanToursAPI.Controllers
         ObjectMapperModels mapper = ObjectMapperModels.Instance;
         OrdersService ordersService;
         SQLProtectService sQLProtectService;
-        public OrdersController(OrdersService ordersService, SQLProtectService sQLProtectService)
+        FanToursService fanToursService;
+        UsersService usersService;
+        public OrdersController(OrdersService ordersService, SQLProtectService sQLProtectService, FanToursService fanToursService, 
+            UsersService usersService)
         {
             this.ordersService = ordersService;
             this.sQLProtectService = sQLProtectService;
+            this.fanToursService = fanToursService;
+            this.usersService = usersService;
         }
 
         [HttpGet]
@@ -58,6 +60,15 @@ namespace FanToursAPI.Controllers
             if (!sQLProtectService.isValid(model.ConsFullname)) return BadRequest("Invalid consumer full name");
             if (!sQLProtectService.isValid(model.ConsEmail)) return BadRequest("Invalid consumer email");
             if (!sQLProtectService.isValid(model.ConsPhoneNumber)) return BadRequest("Invalid consumer phone number");
+            var tour = await fanToursService.Get(model.FanTourId);
+            tour.Quantity--;
+            await fanToursService.Update(tour);
+            var user = await usersService.GetUserByEmail(model.ConsEmail);
+            if (user != null) 
+            {
+                user.Discount += (tour.PriceWithoutTicket + tour.TicketPrice) * 0.5m / 100;
+                await usersService.Update(user);
+            }
             var order = mapper.Mapper.Map<OrderDTO>(model);
             await ordersService.Create(order);
             var orders = await ordersService.GetAll();
@@ -75,12 +86,10 @@ namespace FanToursAPI.Controllers
                 return BadRequest("Validation error");
             }
             if (!sQLProtectService.isValid(model.ConsFullname)) return BadRequest("Invalid consumer full name");
-            if (!sQLProtectService.isValid(model.ConsEmail)) return BadRequest("Invalid consumer email");
             if (!sQLProtectService.isValid(model.ConsPhoneNumber)) return BadRequest("Invalid consumer phone number");
             var order = await ordersService.Get(model.Id);
             if (order is null) return BadRequest("Order not found");
             order.ConsFullname = model.ConsFullname;
-            order.ConsEmail = model.ConsEmail;
             order.ConsPhoneNumber = model.ConsPhoneNumber;
             await ordersService.Update(order);
             var orders = await ordersService.GetAll();
@@ -92,6 +101,16 @@ namespace FanToursAPI.Controllers
         public async Task<ActionResult> RemoveOrder(int id)
         {
             if (await ordersService.Get(id) is null) return BadRequest("Order not found");
+            var model = await ordersService.Get(id);
+            var tour = await fanToursService.Get(model.FanTourId);
+            tour.Quantity++;
+            await fanToursService.Update(tour);
+            var user = await usersService.GetUserByEmail(model.ConsEmail);
+            if (user != null)
+            {
+                user.Discount -= (tour.PriceWithoutTicket + tour.TicketPrice) * 0.5m / 100;
+                await usersService.Update(user);
+            }
             await ordersService.Remove(id);
             var orders = await ordersService.GetAll();
             var mappedOrders = mapper.Mapper.Map<List<OrderModel>>(orders);

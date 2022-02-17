@@ -2,10 +2,13 @@
   <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
     <fantour style="width: 40%; margin-top: 10px;" *ngFor="let fantour of fantours" [fantour]="fantour"></fantour>
   </div>
-  <mat-paginator *ngIf="totalResults > pageSize" style="margin-top: 20px;" (page)="onPaginatorClick($event)"
+  <mat-paginator #paginator *ngIf="totalResults > pageSize" style="margin-top: 20px;" (page)="onPaginatorClick($event)"
                  [length]="totalResults"
                  [pageSize]="pageSize"
                  aria-label="Select page"></mat-paginator>
-  <h1 style="margin-top: 20px;" *ngIf="fantours.length == 0">There is no fantours yet. Come back again later...</h1>
+  <div *ngIf="fantours.length == 0">
+    <h1 style="margin-top: 20px; font-weight: bold; margin-left: 35%;">Fan tours weren't found</h1>
+    <img style="width: 70%; margin-left: 15%; margin-top: 50px; height: 400px;" src="{{errorUrl}}">
+  </div>
 </ng-container>
 

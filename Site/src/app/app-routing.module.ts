@@ -18,15 +18,14 @@ import {UpdateFantourPhotoComponent} from "./admin/admin-fantours/update-fantour
 import {AddNewsComponent} from "./admin/admin-news/add-news/add-news.component";
 import {UpdateNewsComponent} from "./admin/admin-news/update-news/update-news.component";
 import {UpdateNewsPhotoComponent} from "./admin/admin-news/update-news-photo/update-news-photo.component";
-import {RemoveNewsComponent} from "./admin/admin-news/remove-news/remove-news.component";
-import {RemoveFantourComponent} from "./admin/admin-fantours/remove-fantour/remove-fantour.component";
 import {AdminFantoursComponent} from "./admin/admin-fantours/admin-fantours.component";
 import {AdminNewsComponent} from "./admin/admin-news/admin-news.component";
 import {AdminOrdersComponent} from "./admin/admin-orders/admin-orders.component";
 import {UpdateOrderComponent} from "./admin/admin-orders/update-order/update-order.component";
 import {UserMainComponent} from "./user/user-main.component";
 import {NewsInfoComponent} from "./user/news/news-info/news-info.component";
-import {AppComponent} from "./app.component";
+import {FantourInfoComponent} from "./user/fantours/fantour-info/fantour-info.component";
+import {MakeOrderComponent} from "./user/orders/make-order/make-order.component";
 
 const routes: Routes = [
   {
@@ -39,6 +38,40 @@ const routes: Routes = [
       {
         path: 'news/:id',
         component: NewsInfoComponent
+      },
+      {
+        path: 'fantour/:id',
+        component: FantourInfoComponent
+      },
+      {
+        path: 'order/new',
+        component: MakeOrderComponent
+      }
+    ]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
+      {
+        path: 'edit/fullname',
+        component: ChangeFullnameComponent
+      },
+      {
+        path: 'edit/email',
+        component: ChangeEmailComponent
+      },
+      {
+        path: 'edit/password',
+        component: ChangePasswordComponent
+      },
+      {
+        path: 'edit/photo',
+        component: ChangePhotoComponent
+      },
+      {
+        path: 'orders/:userId',
+        component: UserOrdersComponent
       }
     ]
   },
@@ -64,11 +97,7 @@ const routes: Routes = [
           {
             path: 'edit/photo/:id',
             component: UpdateFantourPhotoComponent
-          },
-          {
-            path: 'remove/:id',
-            component: RemoveFantourComponent
-          },
+          }
         ]
       },
       {
@@ -86,10 +115,6 @@ const routes: Routes = [
           {
             path: 'edit/photo/:id',
             component: UpdateNewsPhotoComponent
-          },
-          {
-            path: 'remove/:id',
-            component: RemoveNewsComponent
           }
         ]
       },
@@ -102,33 +127,6 @@ const routes: Routes = [
             component: UpdateOrderComponent
           }
         ]
-      }
-    ]
-  },
-
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    children: [
-      {
-        path: 'edit/fullname',
-        component: ChangeFullnameComponent
-      },
-      {
-        path: 'edit/email',
-        component: ChangeEmailComponent
-      },
-      {
-        path: 'edit/password',
-        component: ChangePasswordComponent
-      },
-      {
-        path: 'edit/photo',
-        component: ChangePhotoComponent
-      },
-      {
-        path: 'orders/:userId',
-        component: UserOrdersComponent
       }
     ]
   },

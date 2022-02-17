@@ -21,7 +21,7 @@
   <ng-container *ngIf="this.news$ | async as news">
     <div *ngIf="news.length > 0">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; margin-top: 35px;">
-        <admin-new  style="width: 47%;" (editClick)="updateEvent($event)" *ngFor="let new of news" [news]="new"></admin-new>
+        <admin-new (removeClick)="removeEvent($event)" style="width: 47%;" (editClick)="updateEvent($event)" *ngFor="let new of news" [news]="new"></admin-new>
       </div>
       <mat-paginator *ngIf="totalResults > pageSize" style="margin-top: 20px;" (page)="onPaginatorClick($event)"
                      [length]="totalResults"

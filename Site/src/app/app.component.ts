@@ -27,7 +27,9 @@ export class AppComponent implements OnInit{
   ) {
     this.form = new FormGroup({
       'search': new FormControl('', Validators.required)
-    })
+    });
+    localStorage.removeItem('search');
+    localStorage.removeItem('price');
   }
 
   ngOnInit(): void {

@@ -38,11 +38,6 @@ export class UpdateOrderComponent implements OnChanges{
         Validators.pattern('^[A-Z,a-z, ]+$'),
         Validators.maxLength(50)
       ]),
-      'consEmail': new FormControl('', [
-        Validators.required,
-        Validators.pattern('^[\\w.]+[@][A-Za-z]+[.]+[A-Za-z.]+$'),
-        Validators.maxLength(50)
-      ]),
       'consPhoneNumber': new FormControl('(+380)', [
         Validators.required,
         Validators.pattern('^\\(\\+380\\)\\d{9}$')
@@ -73,9 +68,9 @@ export class UpdateOrderComponent implements OnChanges{
 
   onEditClick(){
     if(this.form.valid){
-      const { consFullname, consEmail, consPhoneNumber } = this.form.value;
+      const { consFullname, consPhoneNumber } = this.form.value;
       this.errors = [];
-      this.ordersService.updateOrder(this.orderId, consFullname, consEmail, consPhoneNumber).pipe(
+      this.ordersService.updateOrder(this.orderId, consFullname, consPhoneNumber).pipe(
         catchError((err: HttpErrorResponse) => {
           this.isConfirmed = false;
           if(typeof err.error == "string") this.errors.push(err.error);

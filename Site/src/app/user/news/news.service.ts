@@ -11,8 +11,7 @@ export class NewsService{
   news$: Observable<News[]>;
 
   constructor(
-    private readonly newsApiService: NewsApiService,
-    private readonly router: Router
+    private readonly newsApiService: NewsApiService
   ) {
     this.news$ = this.newsApiService.getAllNews().pipe(
       map(news => {
