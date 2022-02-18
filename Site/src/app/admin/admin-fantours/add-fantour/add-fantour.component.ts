@@ -38,11 +38,11 @@ export class AddFantourComponent{
       ]),
       'priceWithoutTicket': new FormControl('', [
         Validators.required,
-        Validators.pattern('^\\d+[.]+\\d+$')
+        Validators.pattern('\\b(\\d+(?:\\.(?:[^0]\\d|\\d[^0]))?)\\b')
       ]),
       'ticketPrice': new FormControl('', [
         Validators.required,
-        Validators.pattern('^\\d+[.]+\\d+$')
+        Validators.pattern('\\b(\\d+(?:\\.(?:[^0]\\d|\\d[^0]))?)\\b')
       ]),
       'photo': new FormControl(null, Validators.required),
       'quantity': new FormControl('', [
@@ -58,15 +58,15 @@ export class AddFantourComponent{
       const { title, description, schedule, priceWithoutTicket, ticketPrice, photo, quantity} = this.form.value;
       this.errors = [];
       if(typeof priceWithoutTicket == 'string'){
-        if(!priceWithoutTicket.match('^\\d+[.]+\\d+$')){
+        if(!priceWithoutTicket.match('\\b(\\d+(?:\\.(?:[^0]\\d|\\d[^0]))?)\\b')){
           this.isConfirmed = false;
-          this.errors.push('Price without ticket must be in format digits.digits');
+          this.errors.push('Price without ticket must be in format "digits" or digits.digits');
         }
       }
       if(typeof ticketPrice == 'string'){
-        if(!ticketPrice.match('^\\d+[.]+\\d+$')){
+        if(!ticketPrice.match('\\b(\\d+(?:\\.(?:[^0]\\d|\\d[^0]))?)\\b')){
           this.isConfirmed = false;
-          this.errors.push('Ticket price must be in format digits.digits');
+          this.errors.push('Ticket price must be in format "digits" or digits.digits');
         }
       }
       if(isNaN(parseInt(quantity))){

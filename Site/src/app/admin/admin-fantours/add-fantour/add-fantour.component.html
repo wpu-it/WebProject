@@ -53,7 +53,7 @@
         <mat-hint>
           <div *ngIf="form.controls['priceWithoutTicket'].errors">
             <div *ngIf="form.controls['priceWithoutTicket'].errors.required" style="font-weight: bolder">Price without ticket is required</div>
-            <div *ngIf="form.controls['priceWithoutTicket'].errors.pattern" style="font-weight: bolder">Write it in format "digits.digits"</div>
+            <div *ngIf="form.controls['priceWithoutTicket'].errors.pattern" style="font-weight: bolder">Write it in format "digits" or "digits.digits"</div>
           </div>
         </mat-hint>
 
@@ -67,7 +67,7 @@
         <mat-hint>
           <div *ngIf="form.controls['ticketPrice'].errors">
             <div *ngIf="form.controls['ticketPrice'].errors.required" style="font-weight: bolder">Ticket price is required</div>
-            <div *ngIf="form.controls['ticketPrice'].errors.pattern" style="font-weight: bolder">Write it in format "digits.digits"</div>
+            <div *ngIf="form.controls['ticketPrice'].errors.pattern" style="font-weight: bolder">Write it in format "digits" or "digits.digits"</div>
           </div>
         </mat-hint>
 
