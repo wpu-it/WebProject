@@ -10,7 +10,7 @@ import {PicturesService} from "../../pictures.service";
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss']
 })
-export class DashboardComponent implements OnChanges{
+export class DashboardComponent implements OnChanges, OnInit{
   userId: number;
   adminPhoto: string = ''
   constructor(
@@ -31,8 +31,12 @@ export class DashboardComponent implements OnChanges{
     })
   }
 
+  ngOnInit(){
+    console.log('init');
+  }
+
   ngOnChanges(changes:SimpleChanges){
-    console.log(changes);
+    console.log('changes');
   }
 
   goToMainPageClick(){

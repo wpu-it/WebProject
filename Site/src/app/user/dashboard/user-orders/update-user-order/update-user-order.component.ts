@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from "@angular/core";
 import {OrdersService} from "../../../orders/orders.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {catchError, take} from "rxjs/operators";
@@ -74,13 +83,13 @@ export class UpdateUserOrderComponent implements OnChanges{
         ref = ref ? ref : new HTMLElement();
         ref.click();
         this.updateEvent.emit();
-        alert('Success');
       });
     }
   }
 
   onCloseClick(){
     this.errors = [];
+    this.disabled = false;
     this.getOrder();
   }
 

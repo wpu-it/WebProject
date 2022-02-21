@@ -55,6 +55,7 @@ export class UpdateFantourComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     this.errors = [];
+    this.disabled = false;
     this.getFantour();
   }
 

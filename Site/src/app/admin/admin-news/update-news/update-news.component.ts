@@ -46,6 +46,7 @@ export class UpdateNewsComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges){
     this.errors = [];
+    this.disabled = false;
     this.getNews();
   }
 

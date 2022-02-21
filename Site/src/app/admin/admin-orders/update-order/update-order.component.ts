@@ -49,6 +49,7 @@ export class UpdateOrderComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges){
     this.errors = [];
+    this.disabled = false;
     this.getOrder();
   }
 
