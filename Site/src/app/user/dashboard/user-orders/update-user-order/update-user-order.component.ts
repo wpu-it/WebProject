@@ -13,6 +13,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class UpdateUserOrderComponent implements OnChanges{
   errors: string[] = [];
   isConfirmed = true;
+  disabled = false;
   @Input() orderId: number;
   @Output() updateEvent = new EventEmitter();
   form: FormGroup;
@@ -47,8 +48,10 @@ export class UpdateUserOrderComponent implements OnChanges{
     if(this.form.valid){
       const { consFullname, consPhoneNumber } = this.form.value;
       this.errors = [];
+      this.disabled = true;
       this.ordersService.updateOrder(this.orderId, consFullname, consPhoneNumber).pipe(
         catchError((err: HttpErrorResponse) => {
+          this.disabled = false;
           this.isConfirmed = false;
           if(typeof err.error == "string") this.errors.push(err.error);
           else{

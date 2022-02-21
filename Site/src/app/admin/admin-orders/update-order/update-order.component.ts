@@ -25,6 +25,7 @@ export class UpdateOrderComponent implements OnChanges{
   @Input() orderId: number;
   errors: string[] = [];
   isConfirmed = true;
+  disabled = false;
   @Output() updateEvent = new EventEmitter();
 
   constructor(
@@ -70,9 +71,11 @@ export class UpdateOrderComponent implements OnChanges{
     if(this.form.valid){
       const { consFullname, consPhoneNumber } = this.form.value;
       this.errors = [];
+      this.disabled = true;
       this.ordersService.updateOrder(this.orderId, consFullname, consPhoneNumber).pipe(
         catchError((err: HttpErrorResponse) => {
           this.isConfirmed = false;
+          this.disabled = false;
           if(typeof err.error == "string") this.errors.push(err.error);
           else{
             let errors = err.error.errors;

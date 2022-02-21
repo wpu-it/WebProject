@@ -16,6 +16,7 @@ export class UpdateNewsPhotoComponent{
   @Input() newsId: number;
   @Output() updateEvent = new EventEmitter();
   isConfirmed = true;
+  disabled = false;
   errors: string[] = [];
 
   constructor(
@@ -32,6 +33,7 @@ export class UpdateNewsPhotoComponent{
     if(this.form.valid){
       const { photo } = this.form.value;
       this.errors = [];
+      this.disabled = true;
       if(photo.length < 1){
         this.isConfirmed = false;
         this.errors.push('Photo is required')
@@ -40,6 +42,7 @@ export class UpdateNewsPhotoComponent{
         this.newsService.updateNewsPhoto(photo, this.newsId).pipe(
           catchError((err: HttpErrorResponse) => {
             this.isConfirmed = false;
+            this.disabled = false;
             if(!this.errors.includes(err.error)){
               if(typeof err.error == "string") this.errors.push(err.error);
               else{

@@ -4,14 +4,11 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges
 } from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpErrorResponse} from "@angular/common/http";
-import {FantoursService} from "../../../user/fantours/fantours.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {NewsService} from "../../../user/news/news.service";
 import {catchError, take} from "rxjs/operators";
 
@@ -25,6 +22,7 @@ export class UpdateNewsComponent implements OnChanges{
   form: FormGroup;
   errors: string[] = [];
   isConfirmed = true;
+  disabled = false;
   @Input() newsId: number = 1;
   @Output() updateEvent = new EventEmitter();
 
@@ -69,9 +67,11 @@ export class UpdateNewsComponent implements OnChanges{
     if(this.form.valid){
       const { title, text } = this.form.value;
       this.errors = [];
+      this.disabled = true;
       this.newsService.updateNews(this.newsId, title, text).pipe(
         catchError((err: HttpErrorResponse) => {
           this.isConfirmed = false;
+          this.disabled = false;
           if(!this.errors.includes(err.error)){
             if(typeof err.error == "string") this.errors.push(err.error);
             else{

@@ -14,6 +14,7 @@ export class AddNewsComponent{
   form: FormGroup;
   errors: string[] = [];
   isConfirmed = true;
+  disabled = false;
   @Output() addEvent = new EventEmitter();
 
   constructor(
@@ -39,9 +40,11 @@ export class AddNewsComponent{
     if(this.form.valid){
       const { title, text, photo } = this.form.value;
       this.errors = [];
+      this.disabled = true;
       this.newsService.addNews(title, text, photo).pipe(
         catchError((err: HttpErrorResponse) => {
           this.isConfirmed = false;
+          this.disabled = false;
           if(!this.errors.includes(err.error)){
             if(typeof err.error == "string") this.errors.push(err.error);
             else{

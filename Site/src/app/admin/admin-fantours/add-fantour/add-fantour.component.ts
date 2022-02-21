@@ -14,6 +14,7 @@ export class AddFantourComponent{
   form: FormGroup;
   errors: string[] = [];
   isConfirmed = true;
+  disabled = false;
   @Output() addEvent = new EventEmitter();
 
   constructor(
@@ -57,6 +58,7 @@ export class AddFantourComponent{
     if(this.form.valid){
       const { title, description, schedule, priceWithoutTicket, ticketPrice, photo, quantity} = this.form.value;
       this.errors = [];
+      this.disabled = true;
       if(typeof priceWithoutTicket == 'string'){
         if(!priceWithoutTicket.match('\\b(\\d+(?:\\.(?:[^0]\\d|\\d[^0]))?)\\b')){
           this.isConfirmed = false;
@@ -77,6 +79,7 @@ export class AddFantourComponent{
         this.fantoursService.addFantour(title, description, schedule, priceWithoutTicket, ticketPrice, photo, quantity).pipe(
           catchError((err: HttpErrorResponse) => {
             this.isConfirmed = false;
+            this.disabled = false;
             if(!this.errors.includes(err.error)){
               if(typeof err.error == "string") this.errors.push(err.error);
               else{

@@ -31,7 +31,7 @@
     <div *ngIf="!isConfirmed">
       <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
     </div>
-    <button style="margin-top: 10px;" mat-raised-button (click)="onEditClick()"><mat-icon>done_outline</mat-icon> Confirm</button>
+    <button style="margin-top: 10px;" mat-raised-button (click)="onEditClick()" [disabled]=""><mat-icon>done_outline</mat-icon> Confirm</button>
     <a id="popup-2-close" href="javascript:PopUpHide(2)" style="margin-left: 10px;" mat-raised-button color="warn" (click)="onCloseClick()"><mat-icon>close</mat-icon> Close</a>
   </form>
 </div>

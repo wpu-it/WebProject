@@ -21,6 +21,7 @@ import {PicturesService} from "../../../pictures.service";
 export class MakeOrderComponent{
   form: FormGroup;
   isConfirmed = true;
+  disabled = false;
   userEmail = '';
   errors: string[] = [];
   fantourId: number = 1;
@@ -97,9 +98,11 @@ export class MakeOrderComponent{
       let email = consEmail;
       if(consEmail == undefined) email = this.userEmail;
       this.errors = [];
+      this.disabled = true;
       this.ordersService.addOrder(consFullname, email, consPhoneNumber, this.fantourId).pipe(
         catchError((err: HttpErrorResponse) => {
           this.isConfirmed = false;
+          this.disabled = false;
           if(typeof err.error == "string") this.errors.push(err.error);
           else{
             let errors = err.error.errors;

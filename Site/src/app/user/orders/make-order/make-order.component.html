@@ -56,7 +56,7 @@
       <div *ngFor="let err of errors" style="font-weight: bold" class="mat-error">{{err}}</div>
     </div>
     <button style="margin-top: 10px; background-color: #37ff37"
-            mat-raised-button (click)="onConfirmClick()"><mat-icon>done_outline</mat-icon> Confirm</button>
+            mat-raised-button (click)="onConfirmClick()" [disabled]="disabled"><mat-icon>done_outline</mat-icon> Confirm</button>
   </form>
 </div>
 <div *ngIf="errors.length != 0">
