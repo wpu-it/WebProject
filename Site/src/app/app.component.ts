@@ -4,6 +4,7 @@ import {BrowserLocalStorage} from "./shared/storage/local-storage";
 import {PicturesService} from "./pictures.service";
 import {AuthService} from "./auth/auth.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UsersService} from "./user/dashboard/users.service";
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,14 @@ export class AppComponent implements OnInit{
   instaLogo = '';
   twitterLogo = '';
   form: FormGroup;
+  userId: number;
 
   constructor(
     readonly localStorage: BrowserLocalStorage,
     private readonly router: Router,
     private readonly picturesService: PicturesService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService
   ) {
     this.form = new FormGroup({
       'search': new FormControl('', Validators.required)
@@ -48,6 +51,9 @@ export class AppComponent implements OnInit{
     this.picturesService.getPictureByName('Twitter logo').subscribe(res => {
       this.twitterLogo = res;
     });
+    this.usersService.user$.subscribe(us => {
+      this.userId = us.id;
+    });
   }
 
   onLogoutClick(){
@@ -57,7 +63,7 @@ export class AppComponent implements OnInit{
   }
 
   onDashboardClick(){
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard/orders/' + this.userId]);
   }
 
 }

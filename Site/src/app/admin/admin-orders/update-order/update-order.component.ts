@@ -55,6 +55,7 @@ export class UpdateOrderComponent implements OnChanges{
 
   onCloseClick(){
     this.errors = [];
+    this.disabled = false;
     this.getOrder();
   }
 

@@ -128,7 +128,8 @@ export class AddFantourComponent{
       priceWithoutTicket: '',
       ticketPrice: '',
       quantity: 1
-    })
+    });
+    this.disabled = false;
   }
 
   onPhotoChange(event: any){

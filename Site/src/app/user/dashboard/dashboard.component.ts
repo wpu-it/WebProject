@@ -24,9 +24,11 @@ export class DashboardComponent implements OnChanges, OnInit{
     this.usersService.getUserByAccessToken(token ? token : '');
     this.usersService.user$.subscribe(us => {
       this.userId = us.id;
-      router.navigate(['dashboard/orders/' + us.id]);
       if(us.isAdmin) {
         this.picturesService.getPictureByName('Admin dashboard').subscribe(res => this.adminPhoto = res);
+      }
+      else{
+        router.navigate(['dashboard/orders/' + us.id]);
       }
     })
   }

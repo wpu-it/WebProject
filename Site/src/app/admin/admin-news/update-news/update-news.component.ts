@@ -52,6 +52,7 @@ export class UpdateNewsComponent implements OnChanges{
 
   onCloseClick(){
     this.errors = [];
+    this.disabled = false;
     this.getNews();
   }
 

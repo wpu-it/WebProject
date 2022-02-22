@@ -77,6 +77,7 @@ export class AddNewsComponent{
       title: '',
       text: ''
     });
+    this.disabled = false;
   }
 
   onPhotoChange(event: any){

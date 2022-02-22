@@ -61,6 +61,7 @@ export class UpdateFantourComponent implements OnChanges{
 
   onCloseClick(){
     this.errors = [];
+    this.disabled = false;
     this.getFantour();
   }
 

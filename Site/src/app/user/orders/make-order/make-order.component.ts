@@ -120,8 +120,7 @@ export class MakeOrderComponent{
         }),
         take(1)
       ).subscribe(res => {
-        alert('Success');
-        this.router.navigate(['']);
+        this.router.navigate(['/dashboard']);
       });
     }
   }

@@ -2,9 +2,9 @@
   <mat-card-content>
     <img style="width: 50%; margin-left: 25%;" src="{{news.photo}}" alt="">
     <div style="margin-top: 10px;"><b>Title:</b></div>
-    <div>{{news.title.slice(0, 20)}}...</div>
+    <div>{{news.title.slice(0, 40)}}...</div>
     <div style="margin-top: 10px;"><b>Text:</b></div>
-    <div>{{news.text.slice(0, 20)}}...</div>
+    <div>{{news.text.slice(0, 40)}}...</div>
   </mat-card-content>
   <div class="btns">
     <button mat-raised-button color="warn" (click)="onRemoveClick()"><mat-icon>delete</mat-icon> Remove</button>
