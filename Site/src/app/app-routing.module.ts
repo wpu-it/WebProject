@@ -26,6 +26,7 @@ import {UserMainComponent} from "./user/user-main.component";
 import {NewsInfoComponent} from "./user/news/news-info/news-info.component";
 import {FantourInfoComponent} from "./user/fantours/fantour-info/fantour-info.component";
 import {MakeOrderComponent} from "./user/orders/make-order/make-order.component";
+import {AdminOrdersDiagramComponent} from "./admin/admin-orders-diagram/admin-orders-diagram.component";
 
 const routes: Routes = [
   {
@@ -127,6 +128,10 @@ const routes: Routes = [
             component: UpdateOrderComponent
           }
         ]
+      },
+      {
+        path: 'orders-diagram',
+        component: AdminOrdersDiagramComponent
       }
     ]
   },

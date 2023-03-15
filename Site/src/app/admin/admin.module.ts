@@ -15,6 +15,8 @@ import {UpdateNewsPhotoComponent} from "./admin-news/update-news-photo/update-ne
 import {AdminOrdersComponent} from "./admin-orders/admin-orders.component";
 import {AdminOrderComponent} from "./admin-orders/admin-order/admin-order.component";
 import {UpdateOrderComponent} from "./admin-orders/update-order/update-order.component";
+import {AdminOrdersDiagramComponent} from "./admin-orders-diagram/admin-orders-diagram.component";
+import {AdminOrdersDiagramService} from "./admin-orders-diagram/admin-orders-diagram.service";
 
 @NgModule({
   imports: [
@@ -38,9 +40,12 @@ import {UpdateOrderComponent} from "./admin-orders/update-order/update-order.com
     UpdateNewsPhotoComponent,
     AdminOrdersComponent,
     AdminOrderComponent,
-    UpdateOrderComponent
+    UpdateOrderComponent,
+    AdminOrdersDiagramComponent
   ],
-  providers: []
+  providers: [
+    AdminOrdersDiagramService
+  ]
 })
 export class AdminModule{
 

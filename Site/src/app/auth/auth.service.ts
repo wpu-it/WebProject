@@ -4,7 +4,7 @@ import {BrowserLocalStorage} from "../shared/storage/local-storage";
 import {Router} from "@angular/router";
 import {map, tap} from "rxjs/operators";
 import {JwtResponse} from "../api/auth/auth-api.interfaces";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {UsersService} from "../user/dashboard/users.service";
 
 @Injectable()

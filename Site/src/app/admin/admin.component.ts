@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -20,9 +19,14 @@ export class AdminComponent{
 
   onChange(event: any){
     let path = event.tab.textLabel.toLowerCase();
-    let arr = path.split(' ');
-    path = '';
-    for(let i =0; i< arr.length;i++) path += arr[i];
+    if(path == "orders diagram"){
+      path = "orders-diagram";
+    }
+    else{
+      let arr = path.split(' ');
+      path = '';
+      for(let i =0; i< arr.length;i++) path += arr[i];
+    }
     this.router.navigate(['admin/' + path]);
   }
 }

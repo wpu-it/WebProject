@@ -56,7 +56,6 @@ export class AdminOrdersComponent{
 
   getOrders(){
     this.ordersService.orders$.subscribe(orders => {
-      console.log(orders);
       this.totalResults = orders.length;
       let result = orders.slice(this.leftPageIdx, this.rightPageIdx + 1);
       this.orders$ = of(result);

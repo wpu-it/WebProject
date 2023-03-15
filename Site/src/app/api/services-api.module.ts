@@ -5,6 +5,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {UsersApiService} from "./users/users-api.service";
 import {NewsApiService} from "./news/news-api.service";
 import {OrdersApiService} from "./orders/orders-api.service";
+import {OrdersDiagramApiService} from "./orders-diagram/orders-diagram-api.service";
 
 @NgModule({
   providers: [
@@ -12,7 +13,8 @@ import {OrdersApiService} from "./orders/orders-api.service";
     FantoursApiService,
     UsersApiService,
     NewsApiService,
-    OrdersApiService
+    OrdersApiService,
+    OrdersDiagramApiService
   ],
   exports: [],
   imports: [
